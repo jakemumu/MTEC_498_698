@@ -26,9 +26,4 @@
 *.a
 *.lib
 
-# Executables
-*.exe
-*.out
-*.app
-
 .DS_Store
