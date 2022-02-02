@@ -93,8 +93,8 @@ void Week2PluginAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void Week2PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    // Initialize our sine wave
+    mSineWave.initialize(442, sampleRate);
 }
 
 void Week2PluginAudioProcessor::releaseResources()
@@ -143,18 +143,28 @@ void Week2PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
+    
+    // Left channel = 0 in the audio buffer
+    int left = 0;
+    
+    // Right channel = 1 in the audio buffer
+    int right = 1;
+    
+    // FOR EACH SAMPLE IN THE INCOMING AUDIO BUFFER
+    for (int sample_index = 0; sample_index < buffer.getNumSamples(); sample_index++) {
+        
+        // GET THE NEXT SAMPLE FROM OUR SINE GENERATOR
+        float output = mSineWave.getNextSample();
+        
+        // STORE THE OUTPUT TO THE LEFT AND RIGHT CHANNELS OF THE AUDIO BUFFER
+        
+        // FROM JUCE:
+        // void setSample (int destChannel, int destSample, Type newValue)
+        
+        buffer.setSample(left, sample_index, output);
+        
+        buffer.setSample(right, sample_index, output);
+        
     }
 }
 
