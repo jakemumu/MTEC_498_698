@@ -27,3 +27,5 @@
 *.lib
 
 .DS_Store
+
+Builds/
