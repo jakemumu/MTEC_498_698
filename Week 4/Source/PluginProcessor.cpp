@@ -11,17 +11,36 @@
 
 //==============================================================================
 CoursePluginAudioProcessor::CoursePluginAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
-#endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
 {
+    /*
+     
+       NOTE:
+     
+       I know this code looks pretty intimidating and crumby -- sometimes we need to get into the trenches a bit when getting things
+       setup in C++ -- however we only need to this one time for the application. Once we set this up we'll never touch this code
+       again, and well use simpler looking code like in our sinewave class.
+     
+     */
+    
+    
+    /* declare a vector of parameters */
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
+    
+    /* loop through our parameter defines and add the parameters to the vector */
+    for (int i = 0; i < TotalNumberParameters; i++) {
+        parameters.push_back(std::make_unique<juce::AudioParameterFloat>(PARAMETER_NAMES[i], PARAMETER_NAMES[i], PARAMETER_RANGES[i], 1.f));
+    }
+    
+    /* construct the parameter tree object -- this will actually add all the parameters to our plugin */
+    mParameterState.reset(new juce::AudioProcessorValueTreeState(*this, nullptr, "PARAMETER_STATE", { parameters.begin(), parameters.end() }));
+    
+    /* now lets get pointers which point to the current values of the parameters, we can use these in our processing loops */
+    for (int i = 0; i < TotalNumberParameters; i++) {
+        mParameterValues[i] = mParameterState->getRawParameterValue(PARAMETER_NAMES[i]);
+    }
 }
 
 CoursePluginAudioProcessor::~CoursePluginAudioProcessor()
@@ -94,7 +113,7 @@ void CoursePluginAudioProcessor::changeProgramName (int index, const juce::Strin
 void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Initialize our sine wave
-    mSineWave.initialize(442, sampleRate);
+    mSineWave1.initialize(442, sampleRate);
 }
 
 void CoursePluginAudioProcessor::releaseResources()
@@ -135,42 +154,24 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    // Left channel = 0 in the audio buffer
-    int left = 0;
+    mSineWave1.setGain(mParameterValues[SineOscillator1Gain]->load());
     
-    // Right channel = 1 in the audio buffer
-    int right = 1;
-    
-    // FOR EACH SAMPLE IN THE INCOMING AUDIO BUFFER
     for (int sample_index = 0; sample_index < buffer.getNumSamples(); sample_index++) {
         
-        // GET THE NEXT SAMPLE FROM OUR SINE GENERATOR
-        float output = mSineWave.getNextSample();
-                
-        // STORE THE OUTPUT TO THE LEFT AND RIGHT CHANNELS OF THE AUDIO BUFFER
-        
-        // FROM JUCE:
-        // void setSample (int destChannel, int destSample, Type newValue)
-        
-        buffer.setSample(left, sample_index, output);
-        
-        buffer.setSample(right, sample_index, output);
+        float output = mSineWave1.getNextSample();
+            
+        buffer.setSample(0, sample_index, output);
+        buffer.setSample(1, sample_index, output);
         
     }
 }
 
-SineWave* CoursePluginAudioProcessor::getSineWave1()
+juce::AudioProcessorValueTreeState& CoursePluginAudioProcessor::getValueTreeState()
 {
-    return &mSineWave;
+    return *mParameterState.get();
 }
 
 //==============================================================================
@@ -185,17 +186,34 @@ juce::AudioProcessorEditor* CoursePluginAudioProcessor::createEditor()
 }
 
 //==============================================================================
-void CoursePluginAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void CoursePluginAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    // Get the underlying ValueTree from out "Parameter Value Tree"
+    auto tree_state = mParameterState->copyState();
+    
+    // Convert the value tree into an XML object which can be saved on disk to as binary
+    std::unique_ptr<juce::XmlElement> xml(tree_state.createXml());
+    
+    /* */
+    DBG(xml->toString());
+
+    /* store as binary */
+    copyXmlToBinary(*xml, destData);
+    
 }
 
-void CoursePluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void CoursePluginAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+
+    if (xmlState.get()) {
+        
+        DBG(xmlState->toString());
+        
+        juce::ValueTree parameter_tree = juce::ValueTree::fromXml(*xmlState);
+        mParameterState->replaceState(parameter_tree);
+        
+    }
 }
 
 //==============================================================================

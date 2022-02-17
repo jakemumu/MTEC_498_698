@@ -4,23 +4,25 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="mIDlkp" name="Course Plugin">
     <GROUP id="{CD29536D-8845-4D04-0286-4D08E4475253}" name="Source">
-      <FILE id="ixTWBe" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="cuamRr" name="ParameterDefines.h" compile="0" resource="0"
+            file="Source/ParameterDefines.h"/>
+      <FILE id="cxR16y" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="gYuDX3" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="kEK5m1" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="aRSvy4" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="fT3qS8" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="lJ7l0T" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="AzTu83" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="CelVpv" name="SineWave.cpp" compile="1" resource="0" file="Source/SineWave.cpp"/>
-      <FILE id="n8YiuN" name="SineWave.h" compile="0" resource="0" file="Source/SineWave.h"/>
+      <FILE id="nanFpT" name="SineWave.cpp" compile="1" resource="0" file="Source/SineWave.cpp"/>
+      <FILE id="rwwlFO" name="SineWave.h" compile="0" resource="0" file="Source/SineWave.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="Week 2 Plugin"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="Week 2 Plugin"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Course Plugin"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Course Plugin"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../SDKs/JUCE/modules"/>

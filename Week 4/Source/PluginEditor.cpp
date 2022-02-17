@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "ParameterDefines.h"
 
 //==============================================================================
 CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePluginAudioProcessor& p)
@@ -17,31 +18,18 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     // Dont forget you can right click the name of classes, and select jump to
     // definition in order to see their available functions you can call.
     
-    mSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    mSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 150, 20);
-    mSlider.setRange(0.f, 1.f);
-    addAndMakeVisible(mSlider);
+    mSineWave1GainSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    mSineWave1GainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 150, 20);
+    addAndMakeVisible(mSineWave1GainSlider);
     
+    // Instead of using the lambda we used before -- we'll use this JUCE helper class which
+    // connects our slider directly to our parameter tree -- previously we were treating gain as a
+    // "property" -- the lambda is how to connect to those, now we're using parameters -- we can use
+    // the slider attachments for those.
     
-    // This is called a LAMBDA expression, it is used in various programming
-    // languages but this is how we construct them in C++, it's one of the few
-    // "advanced" language features well use in this course.
-    
-    // this is saying "when the slider values changes, please take our reference of our
-    // audio engine / plugin, and set our sine volume, to the current value of our slider.
-    
-    // JUCE manages calling this function for you, when you move the slider on the screen.
-    
-    mSlider.onValueChange = [this]() {
-        audioProcessor.getSineWave1()->setGain(mSlider.getValue());
-    };
-    
-    
-    // Here we simply update the value of our slider to the current value in the audio
-    // engine. If we didn't do this, we'd see the slider at 0, even though the gain
-    // of the sine in the audio engine was 1.f
-    
-    mSlider.setValue(audioProcessor.getSineWave1()->getGain());
+    mSineWave1GainSliderAttachment.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.getValueTreeState(),
+                                                                                                  PARAMETER_NAMES[SineOscillator1Gain],
+                                                                                                  mSineWave1GainSlider));
     
     setSize(400, 300);
 }
@@ -63,5 +51,5 @@ void CoursePluginAudioProcessorEditor::resized()
 {
     // Here we setup where the sine wave is on screen.
     
-    mSlider.setBounds(0, 0, 150, 150);
+    mSineWave1GainSlider.setBounds(0, 0, 150, 150);
 }

@@ -42,8 +42,13 @@ public:
 
 private:
     
+    /*======= SLIDER 1 ======= */
+    
     /* The Slider Member For Our UI */
-    juce::Slider mSlider;
+    juce::Slider mSineWave1GainSlider;
+    /* This is a helpful juce class to attach our slider to our value tree */
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mSineWave1GainSliderAttachment;
+    
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

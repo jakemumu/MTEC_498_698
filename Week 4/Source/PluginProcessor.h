@@ -12,6 +12,7 @@
 
 // INCLUDE OUR SINEWAVE
 #include "SineWave.h"
+#include "ParameterDefines.h"
 
 //==============================================================================
 /**
@@ -44,8 +45,20 @@ public:
      */
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     
-    /* pointer to sine wave */
-    SineWave* getSineWave1();
+    /*
+     The DAW calls this to get the current state of your plugin for saving data
+     */
+    void getStateInformation (juce::MemoryBlock& destData) override;
+
+    /*
+     The DAW calls this to set the current state of your plugin when sessions open
+     */
+    void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    /*
+     Returns the value tree state (our parameters) to the DAW
+     */
+    juce::AudioProcessorValueTreeState& getValueTreeState();
     
     /* called before destruction to free data (rarely used with modern cpp) */
     void releaseResources() override;
@@ -59,27 +72,32 @@ public:
     bool hasEditor() const override;
 
     //==============================================================================
+    /* general functions which tell the DAW information about your plugin -- you made need sometimes */
     const juce::String getName() const override;
-
     bool acceptsMidi() const override;
     bool producesMidi() const override;
     bool isMidiEffect() const override;
     double getTailLengthSeconds() const override;
-
-    //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
     void setCurrentProgram (int index) override;
     const juce::String getProgramName (int index) override;
     void changeProgramName (int index, const juce::String& newName) override;
 
-    //==============================================================================
-    void getStateInformation (juce::MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
-
 private:
     
-    SineWave mSineWave;
+    SineWave mSineWave1;
+    
+    /* this will be our "parameter tree" */
+    std::unique_ptr<juce::AudioProcessorValueTreeState> mParameterState;
+    
+    /* this will hold the current value of the parameters */
+    
+    /* std::atomic is a C++ class which guarantees thread safe
+       read and write access -- you don't need to worry about it
+       to much for now -- you can just treat it like a regular float.
+     */
+    std::array<std::atomic<float>*, TotalNumberParameters> mParameterValues;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CoursePluginAudioProcessor)
