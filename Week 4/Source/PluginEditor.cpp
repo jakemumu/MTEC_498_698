@@ -18,18 +18,26 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     // Dont forget you can right click the name of classes, and select jump to
     // definition in order to see their available functions you can call.
     
-    mSineWave1GainSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    mSineWave1GainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 150, 20);
-    addAndMakeVisible(mSineWave1GainSlider);
+    mGainAmountSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    mGainAmountSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 150, 20);
+    addAndMakeVisible(mGainAmountSlider);
+    
+    mFMAmountSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    mFMAmountSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 150, 20);
+    addAndMakeVisible(mFMAmountSlider);
     
     // Instead of using the lambda we used before -- we'll use this JUCE helper class which
     // connects our slider directly to our parameter tree -- previously we were treating gain as a
     // "property" -- the lambda is how to connect to those, now we're using parameters -- we can use
     // the slider attachments for those.
     
-    mSineWave1GainSliderAttachment.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.getValueTreeState(),
-                                                                                                  PARAMETER_NAMES[SineOscillator1Gain],
-                                                                                                  mSineWave1GainSlider));
+    mGainAmountSliderAttachment.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.getValueTreeState(),
+                                                                                               PARAMETER_NAMES[GAIN_AMOUNT],
+                                                                                               mGainAmountSlider));
+    
+    mFMAmountSliderAttachment.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.getValueTreeState(),
+                                                                                             PARAMETER_NAMES[FM_AMOUNT],
+                                                                                             mFMAmountSlider));
     
     setSize(400, 300);
 }
@@ -49,7 +57,6 @@ void CoursePluginAudioProcessorEditor::paint(juce::Graphics& g)
 
 void CoursePluginAudioProcessorEditor::resized()
 {
-    // Here we setup where the sine wave is on screen.
-    
-    mSineWave1GainSlider.setBounds(0, 0, 150, 150);
+    mGainAmountSlider.setBounds(0, 0, 150, 150);
+    mFMAmountSlider.setBounds(150, 0, 150, 150);
 }

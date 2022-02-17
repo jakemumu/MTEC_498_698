@@ -43,6 +43,22 @@ float SineWave::getNextSample() {
     return output * mSmoothedGain.getNextValue();
 }
 
+float SineWave::getNextSampleWithFM(float inFMOperator)
+{
+    float output = std::sin(juce::MathConstants<float>::twoPi * (mPhase + inFMOperator));
+    
+    // move our phase forward in the sign table by a single step determined by our desired samplerate & playback hz
+    mPhase += mFreqHz / mSampleRate;
+    
+    // if we go passed 1 -- lets loop back around the sine wave
+    if (mPhase > 1.f) {
+        mPhase -= 1.f;
+    }
+    
+    // return the output to the caller
+    return output * mSmoothedGain.getNextValue();
+}
+
 /* */
 void SineWave::setGain(float inGain)
 {

@@ -13,14 +13,14 @@
 // Course Plugin Parameter Defines
 
 enum {
-    SineOscillator1Gain = 0,
-    SineOscillator2Gain,
+    GAIN_AMOUNT = 0,
+    FM_AMOUNT,
     TotalNumberParameters
 };
 
 static const juce::StringArray PARAMETER_NAMES {
-    "Sine Osc 1 Gain",
-    "Sine Osc 2 Gain",
+    "Gain Amount",
+    "FM Amount",
 };
 
 /* the normaliseable range class will be helpful in the future when working with

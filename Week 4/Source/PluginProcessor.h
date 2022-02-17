@@ -87,6 +87,7 @@ public:
 private:
     
     SineWave mSineWave1;
+    SineWave mSineWave1FMOperator;
     
     /* this will be our "parameter tree" */
     std::unique_ptr<juce::AudioProcessorValueTreeState> mParameterState;

@@ -114,6 +114,7 @@ void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 {
     // Initialize our sine wave
     mSineWave1.initialize(442, sampleRate);
+    mSineWave1FMOperator.initialize(442, sampleRate);
 }
 
 void CoursePluginAudioProcessor::releaseResources()
@@ -157,11 +158,13 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    mSineWave1.setGain(mParameterValues[SineOscillator1Gain]->load());
+    mSineWave1FMOperator.setGain(mParameterValues[FM_AMOUNT]->load());
+    mSineWave1.setGain(mParameterValues[GAIN_AMOUNT]->load());
     
     for (int sample_index = 0; sample_index < buffer.getNumSamples(); sample_index++) {
         
-        float output = mSineWave1.getNextSample();
+        float fm_operator = mSineWave1FMOperator.getNextSample();
+        float output = mSineWave1.getNextSampleWithFM(fm_operator);
             
         buffer.setSample(0, sample_index, output);
         buffer.setSample(1, sample_index, output);

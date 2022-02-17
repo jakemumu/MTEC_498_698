@@ -51,6 +51,9 @@ public:
      */
     float getNextSample();
     
+    /* getNextSample w/ FM */
+    float getNextSampleWithFM(float inFMOperator);
+    
     /* */
     void setGain(float inGain);
     
