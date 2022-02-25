@@ -5,25 +5,27 @@
   <MAINGROUP id="mIDlkp" name="Course Plugin">
     <GROUP id="{CD29536D-8845-4D04-0286-4D08E4475253}" name="Source">
       <GROUP id="{190EB07D-BA88-CEC3-4E9E-85966267BC58}" name="DSP">
-        <FILE id="dfo9Pz" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/SineWave.cpp"/>
-        <FILE id="jfHwln" name="SineWave.h" compile="0" resource="0" file="Source/DSP/SineWave.h"/>
+        <FILE id="JuMptT" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Delay.cpp"/>
+        <FILE id="BkiEoE" name="Delay.h" compile="0" resource="0" file="Source/DSP/Delay.h"/>
+        <FILE id="dhjHh2" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/SineWave.cpp"/>
+        <FILE id="BSlkkv" name="SineWave.h" compile="0" resource="0" file="Source/DSP/SineWave.h"/>
       </GROUP>
       <GROUP id="{2705BE4D-8365-E0E2-2B2E-D1ABE8F7FC99}" name="Managers">
         <GROUP id="{B9CC7206-6E7A-CCA9-AF76-60B5B4D6F2E6}" name="Parameter Manager">
-          <FILE id="KkM5e3" name="ParameterDefines.h" compile="0" resource="0"
+          <FILE id="LdeoVa" name="ParameterDefines.h" compile="0" resource="0"
                 file="Source/Managers/Parameter Manager/ParameterDefines.h"/>
-          <FILE id="IPVDkl" name="ParameterManager.cpp" compile="1" resource="0"
+          <FILE id="sUGGzp" name="ParameterManager.cpp" compile="1" resource="0"
                 file="Source/Managers/Parameter Manager/ParameterManager.cpp"/>
-          <FILE id="CIWRyR" name="ParameterManager.h" compile="0" resource="0"
+          <FILE id="IhS1AM" name="ParameterManager.h" compile="0" resource="0"
                 file="Source/Managers/Parameter Manager/ParameterManager.h"/>
         </GROUP>
       </GROUP>
-      <FILE id="HlIS9Z" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="uz3dzB" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="aT9ZDI" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="NejloO" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="pyHHJy" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="am1DsU" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="xc03w4" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="SHRYxt" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
     </GROUP>
   </MAINGROUP>

@@ -136,8 +136,8 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    mSineWave1FMOperator.setGain(mParameterManager->getCurrentValue(FM_AMOUNT));
-    mSineWave1.setGain(mParameterManager->getCurrentValue(GAIN_AMOUNT));
+    mSineWave1FMOperator.setGain(mParameterManager->getCurrentValue(SINE_FM_AMOUNT));
+    mSineWave1.setGain(mParameterManager->getCurrentValue(SINE_GAIN));
     
     mDelayLeft.setParameters(.5, .5f);
     mDelayRight.setParameters(.5, .5f);
