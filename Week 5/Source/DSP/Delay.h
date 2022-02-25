@@ -24,7 +24,7 @@ public:
     void initialize(float inSampleRate);
     
     /* */
-    void setParameters(float inTimeSeconds, float inFeedbackAmount);
+    void setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix);
     
     /* */
     void processBlock(float* inBuffer, int inNumSamples);
@@ -36,6 +36,7 @@ private:
     
     float mTimeInSeconds = 0;
     float mFeedbackAmount = 0;
+    float mMix = 0;
     
     float mWriteHead = 0;
     float mFeedbackSample = 0;

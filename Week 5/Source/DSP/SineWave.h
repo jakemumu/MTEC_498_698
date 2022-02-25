@@ -55,10 +55,7 @@ public:
     float getNextSampleWithFM(float inFMOperator);
     
     /* */
-    void setGain(float inGain);
-    
-    /* */
-    float getGain();
+    void setParameters(float inFreq, float inGain);
     
     
 // Private means these are not accessible to the outside world

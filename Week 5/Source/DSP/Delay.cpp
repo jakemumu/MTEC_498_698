@@ -27,10 +27,11 @@ void Delay::initialize(float inSampleRate)
 }
 
 /* */
-void Delay::setParameters(float inTimeSeconds, float inFeedbackAmount)
+void Delay::setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix)
 {
     mFeedbackAmount = inFeedbackAmount;
     mTimeInSeconds = inTimeSeconds;
+    mMix = inMix;
 }
 
 /* */
@@ -63,5 +64,5 @@ void Delay::processSample(float& inSample)
     
     mFeedbackSample = output_sample;
     
-    inSample = (output_sample * 0.5f) + (inSample * 0.5f);
+    inSample = (output_sample * mMix) + (inSample * (1.f-mMix));
 }

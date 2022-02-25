@@ -59,13 +59,8 @@ float SineWave::getNextSampleWithFM(float inFMOperator)
     return output * mSmoothedGain.getNextValue();
 }
 
-/* */
-void SineWave::setGain(float inGain)
+void SineWave::setParameters(float inFreq, float inGain)
 {
+    mFreqHz = inFreq;
     mSmoothedGain.setTargetValue(inGain);
-}
-
-float SineWave::getGain()
-{
-    return mSmoothedGain.getTargetValue();
 }
