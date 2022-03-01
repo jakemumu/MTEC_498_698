@@ -91,8 +91,8 @@ void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     mSineWave1.initialize(442, sampleRate);
     mSineWave1FMOperator.initialize(442, sampleRate);
     
-    mDelayLeft.initialize(sampleRate);
-    mDelayRight.initialize(sampleRate);
+    mDelayLeft.initialize(sampleRate, samplesPerBlock);
+    mDelayRight.initialize(sampleRate, samplesPerBlock);
 }
 
 void CoursePluginAudioProcessor::releaseResources()

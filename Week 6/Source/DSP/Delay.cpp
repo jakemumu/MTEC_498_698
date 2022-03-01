@@ -21,12 +21,20 @@ Delay::~Delay()
 }
 
 /* */
-void Delay::initialize(float inSampleRate)
+void Delay::initialize(float inSampleRate, int inBlocksize)
 {
     mSampleRate = inSampleRate;
     mCircularBuffer.setSize(1, 5 * inSampleRate);
     mTimeInSeconds.reset(inSampleRate, 0.25);
     mTimeInSeconds.setCurrentAndTargetValue(0.01);
+    
+    juce::dsp::ProcessSpec spec;
+    spec.sampleRate = inSampleRate;
+    spec.maximumBlockSize = inBlocksize;
+    spec.numChannels = 1;
+    
+    mHighPassFilter.prepare(spec);
+    mHighPassFilter.coefficients = mHighpassCoefficients.makeHighPass(inSampleRate, 22000);
 }
 
 /* */
@@ -74,6 +82,8 @@ void Delay::processSample(float& inSample)
     float output_sample = AudioHelpers::lin_interp(sample_x, sample_x1, inter_sample_amount);
     
     mFeedbackSample = output_sample;
+    
+    mFeedbackSample = mHighPassFilter.processSample(mFeedbackSample);
     
     inSample = (output_sample * mMix) + (inSample * (1.f-mMix));
 }

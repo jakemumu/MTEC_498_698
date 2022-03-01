@@ -21,7 +21,7 @@ public:
     ~Delay();
     
     /* */
-    void initialize(float inSampleRate);
+    void initialize(float inSampleRate, int inBlocksize);
     
     /* */
     void setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix);
@@ -45,6 +45,8 @@ private:
     
     float mSampleRate;
     
+    juce::dsp::IIR::Coefficients<float> mHighpassCoefficients;
+    juce::dsp::IIR::Filter<float> mHighPassFilter;
 };
 
 #endif /* Delay_h */
