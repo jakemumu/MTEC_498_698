@@ -34,7 +34,7 @@ void Delay::initialize(float inSampleRate, int inBlocksize)
     spec.numChannels = 1;
     
     mHighPassFilter.prepare(spec);
-    mHighPassFilter.coefficients = mHighpassCoefficients.makeHighPass(inSampleRate, 22000);
+    mHighPassFilter.coefficients = mHighpassCoefficients.makeHighPass(inSampleRate, 10000);
 }
 
 /* */
@@ -84,6 +84,8 @@ void Delay::processSample(float& inSample)
     mFeedbackSample = output_sample;
     
     mFeedbackSample = mHighPassFilter.processSample(mFeedbackSample);
+    
+    output_sample = tanh(output_sample * 2);
     
     inSample = (output_sample * mMix) + (inSample * (1.f-mMix));
 }
