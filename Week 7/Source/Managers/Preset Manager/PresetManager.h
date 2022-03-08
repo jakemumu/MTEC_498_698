@@ -22,7 +22,7 @@ public:
     ~PresetManager();
     
     /* */
-    StringArray getCurrentPresets();
+    StringArray getCurrentPresetNames();
     
     /* */
     void saveCurrentPreset(String inPresetName);

@@ -40,3 +40,16 @@ void PresetManager::saveCurrentPreset(String inPresetName)
     
     preset_file.appendText(xml->toString());
 }
+
+StringArray PresetManager::getCurrentPresetNames()
+{
+    StringArray preset_names;
+    
+    RangedDirectoryIterator iter(FolderManager::getPresetsFolder(), false, "*.xml");
+    
+    for (auto entry : iter) {
+        preset_names.add(entry.getFile().getFileNameWithoutExtension());
+    }
+    
+    return preset_names;
+}

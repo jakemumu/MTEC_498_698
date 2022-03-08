@@ -24,6 +24,8 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
     auto value_tree = audioProcessor.getParameterManager()->getValueTree();
     
+    
+    // SETUP OUR SLIDERS
     for (int i = 0; i < TotalNumberParameters; i++) {
         // Create the slider
         Slider* slider = new Slider();
@@ -38,6 +40,8 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
         mSliderAttachments.add(attachment);
     }
     
+    
+    // PRESET SAVE BUTTON
     mSavePreset.setButtonText("Save");
     addAndMakeVisible(mSavePreset);
     
@@ -50,6 +54,18 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
             audioProcessor.getPresetManager()->saveCurrentPreset(file_name);
         }
     };
+    
+    
+    // PRESET LOAD DROPDOWN
+    auto preset_names = audioProcessor.getPresetManager()->getCurrentPresetNames();
+    
+    int id = 1;
+    for (auto preset_name : preset_names) {
+        mPresetOptions.addItem(preset_name, id);
+        id++;
+    }
+    
+    addAndMakeVisible(mPresetOptions);
     
     setSize(TotalNumberParameters * 100 + 100, 120);
 }
@@ -81,4 +97,5 @@ void CoursePluginAudioProcessorEditor::resized()
     }
     
     mSavePreset.setBounds(getWidth()-100, 0, 100, 50);
+    mPresetOptions.setBounds(getWidth()-100, 50, 100, 50);
 }
