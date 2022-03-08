@@ -18,6 +18,8 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     // Dont forget you can right click the name of classes, and select jump to
     // definition in order to see their available functions you can call.
     
+    setLookAndFeel(&mLookAndFeel);
+    
     mGainAmountSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     mGainAmountSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 150, 20);
     addAndMakeVisible(mGainAmountSlider);
@@ -62,6 +64,7 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
 
 CoursePluginAudioProcessorEditor::~CoursePluginAudioProcessorEditor()
 {
+    setLookAndFeel(nullptr);
 }
 
 //==============================================================================

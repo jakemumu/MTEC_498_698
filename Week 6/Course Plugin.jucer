@@ -4,6 +4,11 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="mIDlkp" name="Course Plugin">
     <GROUP id="{CD29536D-8845-4D04-0286-4D08E4475253}" name="Source">
+      <GROUP id="{3EC95DA7-B0F9-CA6B-B8D1-CBC122684BB8}" name="GUI">
+        <FILE id="TQt1sv" name="MyLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/MyLookAndFeel.cpp"/>
+        <FILE id="Yxo2rI" name="MyLookAndFeel.h" compile="0" resource="0" file="Source/MyLookAndFeel.h"/>
+      </GROUP>
       <GROUP id="{190EB07D-BA88-CEC3-4E9E-85966267BC58}" name="DSP">
         <FILE id="JuMptT" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Delay.cpp"/>
         <FILE id="BkiEoE" name="Delay.h" compile="0" resource="0" file="Source/DSP/Delay.h"/>
