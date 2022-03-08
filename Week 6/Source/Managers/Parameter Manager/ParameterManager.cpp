@@ -15,7 +15,10 @@ ParameterManager::ParameterManager(juce::AudioProcessor* inAudioProcessor)
     
     /* loop through our parameter defines and add the parameters to the vector */
     for (int i = 0; i < TotalNumberParameters; i++) {
-        parameters.push_back(std::make_unique<juce::AudioParameterFloat>(PARAMETER_NAMES[i], PARAMETER_NAMES[i], PARAMETER_RANGES[i], 1.f));
+        parameters.push_back(std::make_unique<juce::AudioParameterFloat>(PARAMETER_NAMES[i],
+                                                                         PARAMETER_NAMES[i],
+                                                                         PARAMETER_RANGES[i],
+                                                                         PARAMETER_DEFAULTS[i]));
     }
     
     /* construct the parameter tree object -- this will actually add all the parameters to our plugin */

@@ -38,7 +38,7 @@ namespace juce
     It also provides some utility child classes for connecting parameters directly to
     GUI controls like sliders.
 
-    The favoured constructor of this class takes a collection of RangedAudioParameters or
+ The favoured const*ructor of this class takes a c*ollection of RangedAudioParameters or
     AudioProcessorParameterGroups of RangedAudioParameters and adds them to the attached
     AudioProcessor directly.
 

@@ -34,15 +34,18 @@ void Delay::initialize(float inSampleRate, int inBlocksize)
     spec.numChannels = 1;
     
     mHighPassFilter.prepare(spec);
-    mHighPassFilter.coefficients = mHighpassCoefficients.makeHighPass(inSampleRate, 10000);
+    mLowpassFilter.prepare(spec);
 }
 
 /* */
-void Delay::setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix)
+void Delay::setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix, float inLPFreq, float inHPFreq)
 {
     mTimeInSeconds.setTargetValue(inTimeSeconds);
     mFeedbackAmount = inFeedbackAmount;
     mMix = inMix;
+    
+    mHighPassFilter.coefficients = mHighpassCoefficients.makeHighPass(mSampleRate, inHPFreq);
+    mLowpassFilter.coefficients = mLowpassCoefficients.makeLowPass(mSampleRate, inLPFreq);
 }
 
 /* */
@@ -67,13 +70,14 @@ void Delay::processSample(float& inSample)
     float time_in_sample = mTimeInSeconds.getNextValue() * mSampleRate;
     float read_head = mWriteHead - time_in_sample;
     
-    if (read_head < 0) {
-        read_head += mCircularBuffer.getNumSamples();
-    }
+    read_head = AudioHelpers::wrap_buffer(read_head, mCircularBuffer.getNumSamples());
     
     // Get Interpolation Positions
     int sample_x_pos = floor(read_head);
-    int sample_x1_pos = (sample_x_pos + 1) % mCircularBuffer.getNumSamples();
+    int sample_x1_pos = sample_x_pos + 1;
+    
+    sample_x1_pos = AudioHelpers::wrap_buffer(sample_x1_pos, mCircularBuffer.getNumSamples());
+    
     float inter_sample_amount = read_head - sample_x_pos;
     
     // Get Interpolation Values
@@ -84,8 +88,7 @@ void Delay::processSample(float& inSample)
     mFeedbackSample = output_sample;
     
     mFeedbackSample = mHighPassFilter.processSample(mFeedbackSample);
-    
-    output_sample = tanh(output_sample * 2);
-    
+    mFeedbackSample = mLowpassFilter.processSample(mFeedbackSample);
+        
     inSample = (output_sample * mMix) + (inSample * (1.f-mMix));
 }

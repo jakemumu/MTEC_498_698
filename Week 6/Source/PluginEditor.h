@@ -43,24 +43,9 @@ public:
 
 private:
         
-    juce::Slider mGainAmountSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mGainAmountSliderAttachment;
-    
-    juce::Slider mFMAmountSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mFMAmountSliderAttachment;
-    
-    juce::Slider mFMFreqSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mFMFreqSliderAttachment;
-    
-    juce::Slider mDelayTimeSecondsSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mDelayTimeSecondsSliderAttachment;
-    
-    juce::Slider mDelayFeedbackSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mDelayFeedbackSliderAttachment;
-    
-    juce::Slider mDelayMixSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mDelayMixSliderAttachment;
-    
+    OwnedArray<Slider> mSliders;
+    OwnedArray<AudioProcessorValueTreeState::SliderAttachment> mSliderAttachments;
+
     MyLookAndFeel mLookAndFeel;
     
     // This reference is provided as a quick way for your editor to

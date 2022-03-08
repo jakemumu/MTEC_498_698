@@ -11,9 +11,12 @@
 #include <JuceHeader.h>
 
 // INCLUDE OUR SINEWAVE
-#include "SineWave.h"
+#include "InMemorySample.h"
 #include "Delay.h"
 #include "ParameterManager.h"
+
+
+#define SIMPLE_SAMPLE_IN_STANDALONE 1
 
 //==============================================================================
 /**
@@ -85,11 +88,14 @@ public:
 
 private:
     
-    SineWave mSineWave1;
-    SineWave mSineWave1FMOperator;
+    void _generateSimpleSample(AudioBuffer<float>& inBuffer);
     
     Delay mDelayLeft;
     Delay mDelayRight;
+    
+#if SIMPLE_SAMPLE_IN_STANDALONE
+    InMemorySample mTestingSample;
+#endif
     
     std::unique_ptr<ParameterManager> mParameterManager;
     

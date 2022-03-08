@@ -87,10 +87,6 @@ void CoursePluginAudioProcessor::changeProgramName (int index, const juce::Strin
 //==============================================================================
 void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Initialize our sine wave
-    mSineWave1.initialize(442, sampleRate);
-    mSineWave1FMOperator.initialize(442, sampleRate);
-    
     mDelayLeft.initialize(sampleRate, samplesPerBlock);
     mDelayRight.initialize(sampleRate, samplesPerBlock);
 }
@@ -136,24 +132,20 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    mSineWave1FMOperator.setParameters(mParameterManager->getCurrentValue(SINE_FM_FREQUENCY),
-                                       mParameterManager->getCurrentValue(SINE_FM_AMOUNT));
-    
-    mSineWave1.setParameters(440.f, mParameterManager->getCurrentValue(SINE_GAIN));
-    
     mDelayLeft.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
                              mParameterManager->getCurrentValue(DELAY_FEEDBACK),
-                             mParameterManager->getCurrentValue(DELAY_MIX));
+                             mParameterManager->getCurrentValue(DELAY_MIX),
+                             mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
+                             mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
     
     mDelayRight.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
                               mParameterManager->getCurrentValue(DELAY_FEEDBACK),
-                              mParameterManager->getCurrentValue(DELAY_MIX));
+                              mParameterManager->getCurrentValue(DELAY_MIX),
+                              mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
+                              mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
     
-    for (int sample_index = 0; sample_index < buffer.getNumSamples(); sample_index++) {
-        float fm_operator = mSineWave1FMOperator.getNextSample();
-        float output = mSineWave1.getNextSampleWithFM(fm_operator);
-        buffer.setSample(0, sample_index, output);
-        buffer.setSample(1, sample_index, output);
+    if (wrapperType == AudioProcessor::wrapperType_Standalone && SIMPLE_SAMPLE_IN_STANDALONE) {
+        _generateSimpleSample(buffer);
     }
     
     mDelayLeft.processBlock(buffer.getWritePointer(0), buffer.getNumSamples());
@@ -205,6 +197,44 @@ void CoursePluginAudioProcessor::setStateInformation(const void* data, int sizeI
         mParameterManager->getValueTree()->replaceState(parameter_tree);
         
     }
+}
+
+void CoursePluginAudioProcessor::_generateSimpleSample(AudioBuffer<float>& inBuffer)
+{
+#if SIMPLE_SAMPLE_IN_STANDALONE
+    static int mPhase = 0;
+    
+    if (!mTestingSample.isFileLoaded()) {
+        
+        File dir = File::getSpecialLocation(File::SpecialLocationType::currentExecutableFile);
+        
+        String dir_name = dir.getFileName();
+        
+        while (dir_name.contains("Week") == false) {
+            dir = dir.getParentDirectory();
+            dir_name = dir.getFileName();
+        }
+        
+        String file_name = "break.wav";
+        
+        File sample = dir
+        .getChildFile("Test_Audio")
+        .getChildFile(file_name);
+
+        mTestingSample.loadFile(sample);
+    }
+    
+    for (int i = 0; i < inBuffer.getNumSamples(); i++) {
+        std::vector<float> samples(2);
+        mTestingSample.getSample(mPhase, samples);
+        inBuffer.setSample(0, i, samples[0]);
+        inBuffer.setSample(1, i, samples[1]);
+        mPhase += 1;
+        if (mPhase >= mTestingSample.getLengthInSamples()) {
+            mPhase = 0;
+        }
+    }
+#endif
 }
 
 //==============================================================================

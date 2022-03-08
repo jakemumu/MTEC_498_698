@@ -24,7 +24,7 @@ public:
     void initialize(float inSampleRate, int inBlocksize);
     
     /* */
-    void setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix);
+    void setParameters(float inTimeSeconds, float inFeedbackAmount, float inMix, float inLPFreq, float inHPFreq);
     
     /* */
     void processBlock(float* inBuffer, int inNumSamples);
@@ -47,6 +47,9 @@ private:
     
     juce::dsp::IIR::Coefficients<float> mHighpassCoefficients;
     juce::dsp::IIR::Filter<float> mHighPassFilter;
+    
+    juce::dsp::IIR::Coefficients<float> mLowpassCoefficients;
+    juce::dsp::IIR::Filter<float> mLowpassFilter;
 };
 
 #endif /* Delay_h */
