@@ -15,7 +15,6 @@
 #include "Delay.h"
 #include "ParameterManager.h"
 
-
 #define SIMPLE_SAMPLE_IN_STANDALONE 1
 
 //==============================================================================

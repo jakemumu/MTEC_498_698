@@ -69,17 +69,6 @@ public:
                                      std::vector<float>& inResults,
                                      bool inWrapPhases);
     
-    /* */
-    void getCubicSplineInterpolatedSample(float inFloatSample,
-                                          std::vector<float>& inResults,
-                                          bool inWrapPhases);
-    
-    /* */
-    void getCubicSplineInterpolatedSample(float inFloatSampleLeft,
-                                          float inFloatSampleRight,
-                                          std::vector<float>& inResults,
-                                          bool inWrapPhases);
-    
 private:
     
     File mFile;
