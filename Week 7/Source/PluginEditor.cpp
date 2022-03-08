@@ -9,6 +9,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "ParameterDefines.h"
+#include "FolderManager.h"
 
 //==============================================================================
 CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePluginAudioProcessor& p)
@@ -37,7 +38,20 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
         mSliderAttachments.add(attachment);
     }
     
-    setSize(TotalNumberParameters * 100, 120);
+    mSavePreset.setButtonText("Save");
+    addAndMakeVisible(mSavePreset);
+    
+    mSavePreset.onClick = [this]() {
+        File presets_folder = FolderManager::getPresetsFolder();
+        FileChooser chooser ("Save A Preset", presets_folder, "*.xml");
+        
+        if (chooser.browseForFileToSave(true)) {
+            String file_name = chooser.getResult().getFileNameWithoutExtension();
+            audioProcessor.getPresetManager()->saveCurrentPreset(file_name);
+        }
+    };
+    
+    setSize(TotalNumberParameters * 100 + 100, 120);
 }
 
 CoursePluginAudioProcessorEditor::~CoursePluginAudioProcessorEditor()
@@ -65,4 +79,6 @@ void CoursePluginAudioProcessorEditor::resized()
     for (int i = 0; i < TotalNumberParameters; i++) {
         mSliders[i]->setBounds(100 * i, 0, 100, 100);
     }
+    
+    mSavePreset.setBounds(getWidth()-100, 0, 100, 50);
 }

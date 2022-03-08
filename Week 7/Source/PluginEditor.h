@@ -45,6 +45,8 @@ private:
         
     OwnedArray<Slider> mSliders;
     OwnedArray<AudioProcessorValueTreeState::SliderAttachment> mSliderAttachments;
+    
+    TextButton mSavePreset;
 
     MyLookAndFeel mLookAndFeel;
     

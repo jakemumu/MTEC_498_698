@@ -15,8 +15,6 @@ PresetManager::PresetManager(ProcessorInterface* inInterface)
 : mProcessorInterface(inInterface)
 {
     auto presetsFolder = FolderManager::getPresetsFolder();
-    
-    DBG("PRESET FOLDER EXIST: " << (int)presetsFolder.exists());
 }
 
 /* */
