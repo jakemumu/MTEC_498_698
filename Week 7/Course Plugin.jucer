@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="ua5Pug" name="Course Plugin" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+  <MAINGROUP id="mIDlkp" name="Course Plugin">
+    <GROUP id="{CD29536D-8845-4D04-0286-4D08E4475253}" name="Source">
+      <GROUP id="{32ED57E1-281F-3DD2-5145-3DAC1385903E}" name="DSP">
+        <GROUP id="{7F42A1EA-7BC4-FD75-501A-DABCC4A29991}" name="Generators">
+          <FILE id="E7sjxO" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/Generators/SineWave.cpp"/>
+          <FILE id="ct147j" name="SineWave.h" compile="0" resource="0" file="Source/DSP/Generators/SineWave.h"/>
+        </GROUP>
+        <GROUP id="{0C40DF43-CEE1-ADAE-3F4B-FA7A27E8EBB3}" name="Samples">
+          <FILE id="cJf65c" name="InMemorySample.cpp" compile="1" resource="0"
+                file="Source/DSP/Samples/InMemorySample.cpp"/>
+          <FILE id="AKTaCA" name="InMemorySample.h" compile="0" resource="0"
+                file="Source/DSP/Samples/InMemorySample.h"/>
+          <FILE id="oti9OW" name="SampleBase.cpp" compile="1" resource="0" file="Source/DSP/Samples/SampleBase.cpp"/>
+          <FILE id="KqsmxP" name="SampleBase.h" compile="0" resource="0" file="Source/DSP/Samples/SampleBase.h"/>
+        </GROUP>
+        <GROUP id="{88312DC0-7DD0-E4B3-FB51-E03D966F4B52}" name="Time Based">
+          <FILE id="bK60ol" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Time Based/Delay.cpp"/>
+          <FILE id="hdub2Y" name="Delay.h" compile="0" resource="0" file="Source/DSP/Time Based/Delay.h"/>
+        </GROUP>
+        <FILE id="PasXd7" name="AudioHelpers.h" compile="0" resource="0" file="Source/DSP/AudioHelpers.h"/>
+      </GROUP>
+      <GROUP id="{1B6231C4-F144-2951-2862-8D7299B87DFE}" name="Managers">
+        <GROUP id="{4A42E928-8A1E-4EC3-3DCB-5A026F3B2C10}" name="Parameter Manager">
+          <FILE id="LSB6bH" name="ParameterDefines.h" compile="0" resource="0"
+                file="Source/Managers/Parameter Manager/ParameterDefines.h"/>
+          <FILE id="Kck4se" name="ParameterManager.cpp" compile="1" resource="0"
+                file="Source/Managers/Parameter Manager/ParameterManager.cpp"/>
+          <FILE id="eIi9uO" name="ParameterManager.h" compile="0" resource="0"
+                file="Source/Managers/Parameter Manager/ParameterManager.h"/>
+        </GROUP>
+      </GROUP>
+      <GROUP id="{049607D3-3567-E69C-5A52-CFCA2E9049FA}" name="UI">
+        <FILE id="mohuxd" name="MyLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/UI/MyLookAndFeel.cpp"/>
+        <FILE id="rQtmn3" name="MyLookAndFeel.h" compile="0" resource="0" file="Source/UI/MyLookAndFeel.h"/>
+      </GROUP>
+      <FILE id="AwrTqq" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="mdjoE8" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="VpXFnV" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="bjT4Da" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX" useHeaderMap="1">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Course Plugin"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Course Plugin"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../SDKs/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+</JUCERPROJECT>
