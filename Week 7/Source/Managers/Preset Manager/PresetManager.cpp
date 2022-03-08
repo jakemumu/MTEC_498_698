@@ -15,12 +15,25 @@ PresetManager::PresetManager(ProcessorInterface* inInterface)
 : mProcessorInterface(inInterface)
 {
     auto presetsFolder = FolderManager::getPresetsFolder();
+    
+    _constructPresetFilesArray();
 }
 
 /* */
 PresetManager::~PresetManager()
 {
     
+}
+
+/* */
+void PresetManager::loadPreset(int inListIndex)
+{
+    auto file_to_load = mPresetFiles[inListIndex];
+    
+    std::unique_ptr<XmlElement> preset_xml(parseXML(file_to_load));
+        
+    juce::ValueTree parameter_tree = juce::ValueTree::fromXml(*preset_xml);
+    mProcessorInterface->getParameterManager()->getValueTree()->replaceState(parameter_tree);
 }
 
 /* */
@@ -39,17 +52,28 @@ void PresetManager::saveCurrentPreset(String inPresetName)
     }
     
     preset_file.appendText(xml->toString());
+    
+    _constructPresetFilesArray();
 }
 
 StringArray PresetManager::getCurrentPresetNames()
 {
     StringArray preset_names;
     
-    RangedDirectoryIterator iter(FolderManager::getPresetsFolder(), false, "*.xml");
-    
-    for (auto entry : iter) {
-        preset_names.add(entry.getFile().getFileNameWithoutExtension());
+    for (auto file : mPresetFiles) {
+        preset_names.add(file.getFileNameWithoutExtension());
     }
     
     return preset_names;
+}
+
+void PresetManager::_constructPresetFilesArray()
+{
+    mPresetFiles.clear();
+    
+    RangedDirectoryIterator iter(FolderManager::getPresetsFolder(), false, "*.xml");
+    
+    for (auto entry : iter) {
+        mPresetFiles.add(entry.getFile());
+    }
 }

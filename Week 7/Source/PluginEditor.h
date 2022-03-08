@@ -42,6 +42,8 @@ public:
     void resized() override;
 
 private:
+    
+    void _updatePresetComboBoxOptions();
         
     OwnedArray<Slider> mSliders;
     OwnedArray<AudioProcessorValueTreeState::SliderAttachment> mSliderAttachments;

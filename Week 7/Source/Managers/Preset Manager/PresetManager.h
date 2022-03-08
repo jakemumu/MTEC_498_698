@@ -22,12 +22,20 @@ public:
     ~PresetManager();
     
     /* */
+    void loadPreset(int inListIndex);
+    
+    /* */
     StringArray getCurrentPresetNames();
     
     /* */
     void saveCurrentPreset(String inPresetName);
 
 private:
+    
+    /* */
+    void _constructPresetFilesArray();
+    
+    Array<File> mPresetFiles;
     
     ProcessorInterface* mProcessorInterface;
 };

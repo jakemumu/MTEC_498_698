@@ -52,18 +52,15 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
         if (chooser.browseForFileToSave(true)) {
             String file_name = chooser.getResult().getFileNameWithoutExtension();
             audioProcessor.getPresetManager()->saveCurrentPreset(file_name);
+            _updatePresetComboBoxOptions();
         }
     };
     
+    _updatePresetComboBoxOptions();
     
-    // PRESET LOAD DROPDOWN
-    auto preset_names = audioProcessor.getPresetManager()->getCurrentPresetNames();
-    
-    int id = 1;
-    for (auto preset_name : preset_names) {
-        mPresetOptions.addItem(preset_name, id);
-        id++;
-    }
+    mPresetOptions.onChange = [this]() {
+        audioProcessor.getPresetManager()->loadPreset(mPresetOptions.getSelectedItemIndex());
+    };
     
     addAndMakeVisible(mPresetOptions);
     
@@ -98,4 +95,18 @@ void CoursePluginAudioProcessorEditor::resized()
     
     mSavePreset.setBounds(getWidth()-100, 0, 100, 50);
     mPresetOptions.setBounds(getWidth()-100, 50, 100, 50);
+}
+
+void CoursePluginAudioProcessorEditor::_updatePresetComboBoxOptions()
+{
+    mPresetOptions.clear(dontSendNotification);
+    
+    // PRESET LOAD DROPDOWN
+    auto preset_names = audioProcessor.getPresetManager()->getCurrentPresetNames();
+    
+    int id = 1;
+    for (auto preset_name : preset_names) {
+        mPresetOptions.addItem(preset_name, id);
+        id++;
+    }
 }
