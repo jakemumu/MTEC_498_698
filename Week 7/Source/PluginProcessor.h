@@ -17,7 +17,7 @@
 #include "PresetManager.h"
 #include "ProcessorInterface.h"
 
-#define SIMPLE_SAMPLE_IN_STANDALONE 0
+#define SIMPLE_SAMPLE_IN_STANDALONE 1
 
 //==============================================================================
 /**
