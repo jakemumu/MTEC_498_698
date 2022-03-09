@@ -85,8 +85,8 @@ void Delay::processSample(float& inSample)
     float sample_x1 = mCircularBuffer.getSample(0, sample_x1_pos);
     float output_sample = AudioHelpers::lin_interp(sample_x, sample_x1, inter_sample_amount);
         
-    mFeedbackSample = mHighPassFilter.processSample(output_sample);
-    mFeedbackSample = mLowpassFilter.processSample(output_sample);
+    output_sample = mHighPassFilter.processSample(output_sample);
+    output_sample = mLowpassFilter.processSample(output_sample);
     
     mFeedbackSample = output_sample;
         
