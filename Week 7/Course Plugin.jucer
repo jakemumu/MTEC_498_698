@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="ua5Pug" name="Course Plugin" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+              addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1"
+              headerPath="/DSP&#10;/DSP/Generators&#10;/DSP/Samples&#10;/DSP/Time Based&#10;/Managers&#10;/Managers/Folder Manager&#10;/Managers/Interfaces&#10;/Managers/Parameter Manager&#10;/Managers/Preset Manager&#10;/UI">
   <MAINGROUP id="mIDlkp" name="Course Plugin">
     <GROUP id="{CD29536D-8845-4D04-0286-4D08E4475253}" name="Source">
       <GROUP id="{32ED57E1-281F-3DD2-5145-3DAC1385903E}" name="DSP">
@@ -84,6 +85,27 @@
         <MODULEPATH id="juce_dsp" path="../SDKs/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../SDKs/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

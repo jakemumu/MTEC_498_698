@@ -6,9 +6,9 @@
 //
 
 #include "PresetManager.h"
-#include "ProcessorInterface.h"
-#include "FolderManager.h"
-#include "ParameterManager.h"
+#include "../Interfaces/ProcessorInterface.h"
+#include "../Folder Manager/FolderManager.h"
+#include "../Parameter Manager/ParameterManager.h"
 
 /* */
 PresetManager::PresetManager(ProcessorInterface* inInterface)

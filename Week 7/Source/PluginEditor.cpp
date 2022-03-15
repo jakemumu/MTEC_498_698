@@ -8,8 +8,8 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "ParameterDefines.h"
-#include "FolderManager.h"
+#include "Managers/Parameter Manager/ParameterDefines.h"
+#include "Managers/Folder Manager/FolderManager.h"
 
 //==============================================================================
 CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePluginAudioProcessor& p)

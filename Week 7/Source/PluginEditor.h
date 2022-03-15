@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "MyLookAndFeel.h"
+#include "UI/MyLookAndFeel.h"
 
 //==============================================================================
 /**

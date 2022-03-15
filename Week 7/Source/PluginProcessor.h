@@ -11,11 +11,11 @@
 #include <JuceHeader.h>
 
 // INCLUDE OUR SINEWAVE
-#include "InMemorySample.h"
-#include "Delay.h"
-#include "ParameterManager.h"
-#include "PresetManager.h"
-#include "ProcessorInterface.h"
+#include "DSP/Samples/InMemorySample.h"
+#include "DSP/Time Based/Delay.h"
+#include "Managers/Parameter Manager/ParameterManager.h"
+#include "Managers/Preset Manager/PresetManager.h"
+#include "Managers/Interfaces/ProcessorInterface.h"
 
 #define SIMPLE_SAMPLE_IN_STANDALONE 1
 
