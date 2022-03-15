@@ -15,6 +15,7 @@
 #include "DSP/Time Based/Delay.h"
 #include "Managers/Parameter Manager/ParameterManager.h"
 #include "Managers/Preset Manager/PresetManager.h"
+#include "Managers/Property Manager/PropertyManager.h"
 #include "Managers/Interfaces/ProcessorInterface.h"
 #include "PluginProcessorBase.h"
 
@@ -43,6 +44,7 @@ public:
     ParameterManager* getParameterManager() override;
     PresetManager* getPresetManager() override;
     AudioProcessor* getAudioProcessor() override;
+    PropertyManager* getPropertyManager() override;
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -60,6 +62,7 @@ private:
     
     std::unique_ptr<ParameterManager> mParameterManager;
     std::unique_ptr<PresetManager> mPresetManager;
+    std::unique_ptr<PropertyManager> mPropertyManager;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CoursePluginAudioProcessor)

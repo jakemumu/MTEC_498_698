@@ -14,6 +14,7 @@ CoursePluginAudioProcessor::CoursePluginAudioProcessor()
 {
     mParameterManager.reset(new ParameterManager(this));
     mPresetManager.reset(new PresetManager(this));
+    mPropertyManager.reset(new PropertyManager(this));
 }
 
 CoursePluginAudioProcessor::~CoursePluginAudioProcessor()
@@ -71,6 +72,11 @@ AudioProcessor* CoursePluginAudioProcessor::getAudioProcessor()
     return this;
 }
 
+PropertyManager* CoursePluginAudioProcessor::getPropertyManager()
+{
+    return mPropertyManager.get();
+}
+
 juce::AudioProcessorEditor* CoursePluginAudioProcessor::createEditor()
 {
     return new CoursePluginAudioProcessorEditor (*this);
@@ -80,7 +86,7 @@ juce::AudioProcessorEditor* CoursePluginAudioProcessor::createEditor()
 void CoursePluginAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     // Get the underlying ValueTree from out "Parameter Value Tree"
-    auto tree_state = mParameterManager->getValueTree()->copyState();
+    auto parameter_state = mParameterManager->getValueTree()->copyState();
     
     // Convert the value tree into an XML object which can be saved on disk to as binary
     std::unique_ptr<juce::XmlElement> xml(tree_state.createXml());

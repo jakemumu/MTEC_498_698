@@ -47,6 +47,12 @@
                 file="Source/Managers/Preset Manager/PresetManager.cpp"/>
           <FILE id="w9B9Ta" name="PresetManager.h" compile="0" resource="0" file="Source/Managers/Preset Manager/PresetManager.h"/>
         </GROUP>
+        <GROUP id="{22B9CFF0-26AE-1EAB-5914-B403376FEE9E}" name="Property Manager">
+          <FILE id="TjIcaG" name="PropertyManager.cpp" compile="1" resource="0"
+                file="Source/Managers/Property Manager/PropertyManager.cpp"/>
+          <FILE id="fC0nAO" name="PropertyManager.h" compile="0" resource="0"
+                file="Source/Managers/Property Manager/PropertyManager.h"/>
+        </GROUP>
       </GROUP>
       <GROUP id="{049607D3-3567-E69C-5A52-CFCA2E9049FA}" name="UI">
         <FILE id="YWCAkw" name="MyLookAndFeel.cpp" compile="1" resource="0"

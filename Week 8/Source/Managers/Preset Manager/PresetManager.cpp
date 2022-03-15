@@ -9,6 +9,7 @@
 #include "../Interfaces/ProcessorInterface.h"
 #include "../Folder Manager/FolderManager.h"
 #include "../Parameter Manager/ParameterManager.h"
+#include "../Property Manager/PropertyManager.h"
 
 /* */
 PresetManager::PresetManager(ProcessorInterface* inInterface)
@@ -34,6 +35,10 @@ void PresetManager::loadPreset(int inListIndex)
         
     juce::ValueTree parameter_tree = juce::ValueTree::fromXml(*preset_xml);
     mProcessorInterface->getParameterManager()->getValueTree()->replaceState(parameter_tree);
+    
+    mProcessorInterface->getPropertyManager()->getPropertyTree().setProperty("CURRENT_PRESET_NAME",
+                                                                             file_to_load.getFileNameWithoutExtension(),
+                                                                             nullptr);
 }
 
 /* */

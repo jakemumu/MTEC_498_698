@@ -12,6 +12,7 @@
 
 class ParameterManager;
 class PresetManager;
+class PropertyManager;
 
 class ProcessorInterface {
     
@@ -22,6 +23,8 @@ public:
     virtual ParameterManager* getParameterManager() = 0;
     
     virtual PresetManager* getPresetManager() = 0;
+    
+    virtual PropertyManager* getPropertyManager() = 0;
     
     virtual AudioProcessor* getAudioProcessor() = 0;
         
