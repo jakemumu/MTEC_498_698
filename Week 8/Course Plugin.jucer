@@ -55,6 +55,8 @@
         </GROUP>
       </GROUP>
       <GROUP id="{049607D3-3567-E69C-5A52-CFCA2E9049FA}" name="UI">
+        <FILE id="XxunQ3" name="DBMeter.cpp" compile="1" resource="0" file="Source/UI/DBMeter.cpp"/>
+        <FILE id="ossJ5F" name="DBMeter.h" compile="0" resource="0" file="Source/UI/DBMeter.h"/>
         <FILE id="YWCAkw" name="MyLookAndFeel.cpp" compile="1" resource="0"
               file="Source/UI/MyLookAndFeel.cpp"/>
         <FILE id="IDpzi1" name="MyLookAndFeel.h" compile="0" resource="0" file="Source/UI/MyLookAndFeel.h"/>

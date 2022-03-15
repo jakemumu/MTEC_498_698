@@ -37,6 +37,16 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
+    if (wrapperType == AudioProcessor::wrapperType_Standalone && SIMPLE_SAMPLE_IN_STANDALONE) {
+        _generateSimpleSample(buffer);
+    }
+    
+    float input_gain = 0;
+    input_gain += buffer.getRMSLevel(0, 0, buffer.getNumSamples());
+    input_gain += buffer.getRMSLevel(1, 0, buffer.getNumSamples());
+    input_gain /= 2;
+    mInputGain = input_gain;
+    
     mDelayLeft.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
                              mParameterManager->getCurrentValue(DELAY_FEEDBACK),
                              mParameterManager->getCurrentValue(DELAY_MIX),
@@ -49,12 +59,14 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
                               mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
                               mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
     
-    if (wrapperType == AudioProcessor::wrapperType_Standalone && SIMPLE_SAMPLE_IN_STANDALONE) {
-        _generateSimpleSample(buffer);
-    }
-    
     mDelayLeft.processBlock(buffer.getWritePointer(0), buffer.getNumSamples());
     mDelayRight.processBlock(buffer.getWritePointer(1), buffer.getNumSamples());
+    
+    float output_gain = 0;
+    output_gain += buffer.getRMSLevel(0, 0, buffer.getNumSamples());
+    output_gain += buffer.getRMSLevel(1, 0, buffer.getNumSamples());
+    output_gain /= 2;
+    mOutputGain = output_gain;
 }
 
 ParameterManager* CoursePluginAudioProcessor::getParameterManager()
@@ -89,7 +101,7 @@ void CoursePluginAudioProcessor::getStateInformation(juce::MemoryBlock& destData
     auto parameter_state = mParameterManager->getValueTree()->copyState();
     
     // Convert the value tree into an XML object which can be saved on disk to as binary
-    std::unique_ptr<juce::XmlElement> xml(tree_state.createXml());
+    std::unique_ptr<juce::XmlElement> xml(parameter_state.createXml());
     
     /* */
     DBG(xml->toString());
@@ -149,6 +161,15 @@ void CoursePluginAudioProcessor::_generateSimpleSample(AudioBuffer<float>& inBuf
         }
     }
 #endif
+}
+
+float CoursePluginAudioProcessor::getGain(bool returnOutput)
+{
+    if (returnOutput) {
+        return mOutputGain;
+    } else {
+        return mInputGain;
+    }
 }
 
 //==============================================================================

@@ -45,6 +45,7 @@ public:
     PresetManager* getPresetManager() override;
     AudioProcessor* getAudioProcessor() override;
     PropertyManager* getPropertyManager() override;
+    float getGain(bool returnOutput) override;
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -52,6 +53,9 @@ public:
 private:
     
     void _generateSimpleSample(AudioBuffer<float>& inBuffer);
+    
+    float mInputGain = 0;
+    float mOutputGain = 0;
     
     Delay mDelayLeft;
     Delay mDelayRight;

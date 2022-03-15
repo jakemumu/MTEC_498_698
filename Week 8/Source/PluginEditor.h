@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "UI/MyLookAndFeel.h"
+#include "UI/DBMeter.h"
 
 //==============================================================================
 /**
@@ -52,6 +53,9 @@ private:
     ComboBox mPresetOptions;
 
     MyLookAndFeel mLookAndFeel;
+    
+    std::unique_ptr<DBMeter> mInputMeter;
+    std::unique_ptr<DBMeter> mOutputMeter;
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

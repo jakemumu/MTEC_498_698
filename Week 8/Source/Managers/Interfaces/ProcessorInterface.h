@@ -27,6 +27,8 @@ public:
     virtual PropertyManager* getPropertyManager() = 0;
     
     virtual AudioProcessor* getAudioProcessor() = 0;
+    
+    virtual float getGain(bool returnOutput) = 0;
         
 };
 

@@ -64,7 +64,13 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     
     addAndMakeVisible(mPresetOptions);
     
-    setSize(TotalNumberParameters * 100 + 100, 120);
+    
+    mInputMeter.reset(new DBMeter(&audioProcessor, false));
+    mOutputMeter.reset(new DBMeter(&audioProcessor, true));
+    addAndMakeVisible(mInputMeter.get());
+    addAndMakeVisible(mOutputMeter.get());
+    
+    setSize(TotalNumberParameters * 100 + 200, 120);
 }
 
 CoursePluginAudioProcessorEditor::~CoursePluginAudioProcessorEditor()
@@ -90,8 +96,11 @@ void CoursePluginAudioProcessorEditor::paint(juce::Graphics& g)
 void CoursePluginAudioProcessorEditor::resized()
 {
     for (int i = 0; i < TotalNumberParameters; i++) {
-        mSliders[i]->setBounds(100 * i, 0, 100, 100);
+        mSliders[i]->setBounds(50 + 100 * i, 0, 100, 100);
     }
+    
+    mInputMeter->setBounds(20, 10, 10, 80);
+    mOutputMeter->setBounds(TotalNumberParameters * 100 + 70, 10, 10, 80);
     
     mSavePreset.setBounds(getWidth()-100, 0, 100, 50);
     mPresetOptions.setBounds(getWidth()-100, 50, 100, 50);
