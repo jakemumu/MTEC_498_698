@@ -32,9 +32,9 @@ void MainComponent::paint (juce::Graphics& g)
     // for every x pixel in our window, hop in groups of 6
     for (int x = 0; x < getWidth(); x += 6) {
         
-        // calculate a "phase" for this part of the size wave. 
+        // calculate a "phase" for this part of the sine wave. 
         // For this example, the phase of the pixels will distribute 0 - 1
-        float phase = (float)x / (float)getWidth() + mGlobalPhase;
+        float phase = (float)x / (float)getWidth();
 
         // we add the global phase to this value, this will create the speed
         // and animated effect -- try removing this to see how it changes things.
