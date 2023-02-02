@@ -2,15 +2,15 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2020 - Raw Material Software Limited
+   Copyright (c) 2022 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
-   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
+   By using JUCE, you agree to the terms of both the JUCE 7 End-User License
+   Agreement and JUCE Privacy Policy.
 
-   End User License Agreement: www.juce.com/juce-6-licence
+   End User License Agreement: www.juce.com/juce-7-licence
    Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
@@ -27,24 +27,28 @@ namespace juce
 {
 
 //==============================================================================
+struct AccessibleObjCClassDeleter
+{
+    template <typename ElementType>
+    void operator() (ElementType* element) const
+    {
+        juceFreeAccessibilityPlatformSpecificData (element);
+
+        object_setInstanceVariable (element, "handler", nullptr);
+        [element release];
+    }
+};
+
 template <typename Base>
 class AccessibleObjCClass  : public ObjCClass<Base>
 {
-private:
-    struct Deleter
-    {
-        void operator() (Base* element) const
-        {
-            object_setInstanceVariable (element, "handler", nullptr);
-            [element release];
-        }
-    };
-
 public:
-    using Holder = std::unique_ptr<Base, Deleter>;
+    using Holder = std::unique_ptr<Base, AccessibleObjCClassDeleter>;
 
 protected:
-    AccessibleObjCClass()  : ObjCClass<Base> ("JUCEAccessibilityElement_")
+    AccessibleObjCClass() : AccessibleObjCClass ("JUCEAccessibilityElement_") {}
+
+    explicit AccessibleObjCClass (const char* name)  : ObjCClass<Base> (name)
     {
         ObjCClass<Base>::template addIvar<AccessibilityHandler*> ("handler");
     }
@@ -76,38 +80,24 @@ protected:
             && ! handler.getTextInterface()->isReadOnly();
     }
 
+    static id getAccessibilityValueFromInterfaces (const AccessibilityHandler& handler)
+    {
+        if (auto* textInterface = handler.getTextInterface())
+            return juceStringToNS (textInterface->getText ({ 0, textInterface->getTotalNumCharacters() }));
+
+        if (auto* valueInterface = handler.getValueInterface())
+            return juceStringToNS (valueInterface->getCurrentValueAsString());
+
+        return nil;
+    }
+
     //==============================================================================
     static BOOL getIsAccessibilityElement (id self, SEL)
     {
         if (auto* handler = getHandler (self))
-            return ! handler->isIgnored()
-                  && handler->getRole() != AccessibilityRole::window;
+            return ! handler->isIgnored() && handler->getRole() != AccessibilityRole::window;
 
         return NO;
-    }
-
-    static id getAccessibilityValue (id self, SEL)
-    {
-        if (auto* handler = getHandler (self))
-        {
-            if (auto* textInterface = handler->getTextInterface())
-                return juceStringToNS (textInterface->getText ({ 0, textInterface->getTotalNumCharacters() }));
-
-            if (handler->getCurrentState().isCheckable())
-            {
-                return handler->getCurrentState().isChecked()
-                          #if JUCE_IOS
-                           ? @"1" : @"0";
-                          #else
-                           ? @(1) : @(0);
-                          #endif
-            }
-
-            if (auto* valueInterface = handler->getValueInterface())
-                return juceStringToNS (valueInterface->getCurrentValueAsString());
-        }
-
-        return nil;
     }
 
     static void setAccessibilityValue (id self, SEL, NSString* value)
@@ -137,6 +127,10 @@ protected:
 
     static BOOL accessibilityPerformPress (id self, SEL)
     {
+        if (auto* handler = getHandler (self))
+            if (handler->getCurrentState().isCheckable() && handler->getActions().invoke (AccessibilityActionType::toggle))
+                return YES;
+
         return performActionIfSupported (self, AccessibilityActionType::press);
     }
 
@@ -193,10 +187,8 @@ protected:
 
             NSString* nsString = juceStringToNS (title);
 
-           #if ! JUCE_IOS
             if (nsString != nil && [[self accessibilityValue] isEqual: nsString])
                 return @"";
-           #endif
 
             return nsString;
         }
@@ -222,36 +214,58 @@ protected:
 
     static NSInteger getAccessibilityRowCount (id self, SEL)
     {
-        if (auto* tableInterface = getTableInterface (self))
-            return tableInterface->getNumRows();
+        if (auto* tableHandler = getEnclosingHandlerWithInterface (getHandler (self), &AccessibilityHandler::getTableInterface))
+            if (auto* tableInterface = tableHandler->getTableInterface())
+                return tableInterface->getNumRows();
 
         return 0;
     }
 
     static NSInteger getAccessibilityColumnCount (id self, SEL)
     {
-        if (auto* tableInterface = getTableInterface (self))
-            return tableInterface->getNumColumns();
+        if (auto* tableHandler = getEnclosingHandlerWithInterface (getHandler (self), &AccessibilityHandler::getTableInterface))
+            if (auto* tableInterface = tableHandler->getTableInterface())
+                return tableInterface->getNumColumns();
 
         return 0;
     }
 
+    template <typename Getter>
+    static NSRange getCellDimensions (id self, Getter getter)
+    {
+        const auto notFound = NSMakeRange (NSNotFound, 0);
+
+        auto* handler = getHandler (self);
+
+        if (handler == nullptr)
+            return notFound;
+
+        auto* tableHandler = getEnclosingHandlerWithInterface (getHandler (self), &AccessibilityHandler::getTableInterface);
+
+        if (tableHandler == nullptr)
+            return notFound;
+
+        auto* tableInterface = tableHandler->getTableInterface();
+
+        if (tableInterface == nullptr)
+            return notFound;
+
+        const auto result = (tableInterface->*getter) (*handler);
+
+        if (! result.hasValue())
+            return notFound;
+
+        return NSMakeRange ((NSUInteger) result->begin, (NSUInteger) result->num);
+    }
+
     static NSRange getAccessibilityRowIndexRange (id self, SEL)
     {
-        if (auto* cellInterface = getCellInterface (self))
-            return NSMakeRange ((NSUInteger) cellInterface->getRowIndex(),
-                                (NSUInteger) cellInterface->getRowSpan());
-
-        return NSMakeRange (0, 0);
+        return getCellDimensions (self, &AccessibilityTableInterface::getRowSpan);
     }
 
     static NSRange getAccessibilityColumnIndexRange (id self, SEL)
     {
-        if (auto* cellInterface = getCellInterface (self))
-            return NSMakeRange ((NSUInteger) cellInterface->getColumnIndex(),
-                                (NSUInteger) cellInterface->getColumnSpan());
-
-        return NSMakeRange (0, 0);
+        return getCellDimensions (self, &AccessibilityTableInterface::getColumnSpan);
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AccessibleObjCClass)

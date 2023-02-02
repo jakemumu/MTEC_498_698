@@ -2,15 +2,15 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2020 - Raw Material Software Limited
+   Copyright (c) 2022 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
-   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
+   By using JUCE, you agree to the terms of both the JUCE 7 End-User License
+   Agreement and JUCE Privacy Policy.
 
-   End User License Agreement: www.juce.com/juce-6-licence
+   End User License Agreement: www.juce.com/juce-7-licence
    Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
@@ -889,7 +889,7 @@ public:
     //==============================================================================
     /** An RAII class for sending slider listener drag messages.
 
-        This is useful if you are programatically updating the slider's value and want
+        This is useful if you are programmatically updating the slider's value and want
         to imitate a mouse event, for example in a custom AccessibilityHandler.
 
         @see Slider::Listener
@@ -991,6 +991,23 @@ public:
     void mouseExit (const MouseEvent&) override;
     /** @internal */
     void mouseEnter (const MouseEvent&) override;
+    /** @internal */
+    bool keyPressed (const KeyPress&) override;
+
+    //==============================================================================
+   #ifndef DOXYGEN
+    // These methods' bool parameters have changed: see the new method signature.
+    [[deprecated]] void setValue (double, bool);
+    [[deprecated]] void setValue (double, bool, bool);
+    [[deprecated]] void setMinValue (double, bool, bool, bool);
+    [[deprecated]] void setMinValue (double, bool, bool);
+    [[deprecated]] void setMinValue (double, bool);
+    [[deprecated]] void setMaxValue (double, bool, bool, bool);
+    [[deprecated]] void setMaxValue (double, bool, bool);
+    [[deprecated]] void setMaxValue (double, bool);
+    [[deprecated]] void setMinAndMaxValues (double, double, bool, bool);
+    [[deprecated]] void setMinAndMaxValues (double, double, bool);
+   #endif
 
 private:
     //==============================================================================
@@ -999,20 +1016,6 @@ private:
 
     std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
     void init (SliderStyle, TextEntryBoxPosition);
-
-   #if JUCE_CATCH_DEPRECATED_CODE_MISUSE
-    // These methods' bool parameters have changed: see the new method signature.
-    JUCE_DEPRECATED (void setValue (double, bool));
-    JUCE_DEPRECATED (void setValue (double, bool, bool));
-    JUCE_DEPRECATED (void setMinValue (double, bool, bool, bool));
-    JUCE_DEPRECATED (void setMinValue (double, bool, bool));
-    JUCE_DEPRECATED (void setMinValue (double, bool));
-    JUCE_DEPRECATED (void setMaxValue (double, bool, bool, bool));
-    JUCE_DEPRECATED (void setMaxValue (double, bool, bool));
-    JUCE_DEPRECATED (void setMaxValue (double, bool));
-    JUCE_DEPRECATED (void setMinAndMaxValues (double, double, bool, bool));
-    JUCE_DEPRECATED (void setMinAndMaxValues (double, double, bool));
-   #endif
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Slider)
 };

@@ -1,0 +1,3 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}/SDKs/JUCE/examples/DemoRunner"
+}
