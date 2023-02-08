@@ -29,33 +29,46 @@ void MainComponent::paint (juce::Graphics& g)
     // a horizontal line across the middle of the widow
     g.drawLine(0, getHeight()/2, getWidth(), getHeight()/2);
     
-    // for every x pixel in our window, hop in groups of 6
-    for (int x = 0; x < getWidth(); x += 6) {
+    float hz = 2;
+    int sample_rate = 44100;
+    
+    for (int x = 0; x < getWidth(); x++) {
         
-        // calculate a "phase" for this part of the sine wave. 
-        // For this example, the phase of the pixels will distribute 0 - 1
-        float phase = (float)x / (float)getWidth();
-
-        // we add the global phase to this value, this will create the speed
-        // and animated effect -- try removing this to see how it changes things.
-        phase += mGlobalPhase;
+        float sample = juce::jmap(x, 0, getWidth(), 0, sample_rate);
         
-        // the height of our sine
-        float offset_height = getHeight() * .25f;
+        float sine = sin(2 * juce::MathConstants<float>::pi * (sample / (float)sample_rate) * 10);
         
-        // the y offset for this position -- this will transform the range input: [0 - 1] -> [-1 - 1]
-        float sin_y = sinf(phase * juce::MathConstants<float>::twoPi);
-        
-        // scale the offset
-        float offset_y = offset_height * sin_y;
-        
-        // draw a line from the center to this point
-        g.drawLine(x, getHeight()/2, x, getHeight()/2 + offset_y);
-                
-        // draw a circle at the point
-        g.fillEllipse(x - dot_size/2.f, getHeight()/2 - dot_size/2.f + offset_y, dot_size, dot_size);
-        
+        g.fillEllipse(x - dot_size/2.f, getHeight()/2 - dot_size/2.f + sine * 50, dot_size, dot_size);
     }
+    
+    
+//    // for every x pixel in our window, hop in groups of 6
+//    for (int x = 0; x < getWidth(); x += 6) {
+//
+//        // calculate a "phase" for this part of the sine wave.
+//        // For this example, the phase of the pixels will distribute 0 - 1
+//        float phase = (float)x / (float)getWidth();
+//
+//        // we add the global phase to this value, this will create the speed
+//        // and animated effect -- try removing this to see how it changes things.
+//        phase += mGlobalPhase;
+//
+//        // the height of our sine
+//        float offset_height = getHeight() * .25f;
+//
+//        // the y offset for this position -- this will transform the range input: [0 - 1] -> [-1 - 1]
+//        float sin_y = sinf(phase * juce::MathConstants<float>::twoPi);
+//
+//        // scale the offset
+//        float offset_y = offset_height * sin_y;
+//
+//        // draw a line from the center to this point
+//        g.drawLine(x, getHeight()/2, x, getHeight()/2 + offset_y);
+//
+//        // draw a circle at the point
+//        g.fillEllipse(x - dot_size/2.f, getHeight()/2 - dot_size/2.f + offset_y, dot_size, dot_size);
+//
+//    }
 }
 
 void MainComponent::timerCallback()
