@@ -104,6 +104,12 @@ public:
     
 private:
     
+    std::atomic<float>* mix = nullptr;
+    std::atomic<float>* feedback = nullptr;
+    std::atomic<float>* time = nullptr;
+    std::atomic<float>* lowpass = nullptr;
+    std::atomic<float>* highpass = nullptr;
+
     Delay mDelayL;
     Delay mDelayR;
     juce::AudioProcessorValueTreeState mParameterState;

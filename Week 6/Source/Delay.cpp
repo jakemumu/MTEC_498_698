@@ -26,7 +26,7 @@ void Delay::initialize(float inSampleRate, int inBlocksize)
     mCircularBuffer.setSize(1, 5 * inSampleRate);
     mTimeInSeconds.reset(inSampleRate, 0.25);
     mTimeInSeconds.setCurrentAndTargetValue(0.01);
-    
+        
     juce::dsp::ProcessSpec spec;
     spec.sampleRate = inSampleRate;
     spec.maximumBlockSize = inBlocksize;
@@ -34,6 +34,11 @@ void Delay::initialize(float inSampleRate, int inBlocksize)
     
     mHighPassFilter.prepare(spec);
     mLowpassFilter.prepare(spec);
+    
+    mHighPassFilter.reset();
+    mLowpassFilter.reset();
+    
+    mCircularBuffer.clear();
 }
 
 /* */
@@ -89,5 +94,5 @@ void Delay::processSample(float& inSample)
     
     mFeedbackSample = output_sample;
         
-    inSample = (output_sample * mMix) + (inSample * (1.f-mMix));
+    inSample = (output_sample * mMix) + (inSample * (1.f - mMix));
 }

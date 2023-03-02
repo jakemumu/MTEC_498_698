@@ -18,7 +18,11 @@ Week6DelayAudioProcessor::Week6DelayAudioProcessor()
   // construct our parameter state object
   mParameterState (*this, nullptr, juce::Identifier("ParamterState"), getParameterLayout())
 {
-
+    mix = mParameterState.getRawParameterValue("DryWet");
+    feedback = mParameterState.getRawParameterValue("Feedback");
+    time = mParameterState.getRawParameterValue("Time");
+    lowpass = mParameterState.getRawParameterValue("Lowpass_Freq");
+    highpass = mParameterState.getRawParameterValue("Highpass_Freq");
 }
 
 Week6DelayAudioProcessor::~Week6DelayAudioProcessor()
@@ -56,14 +60,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout Week6DelayAudioProcessor::ge
                                                            "Lowpass",
                                                            20.f,
                                                            22000.f,
-                                                           30.f));
+                                                           22000.f));
     
     // highpass param
     layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("Highpass_Freq", 1),
                                                            "Highpass",
                                                            20.f,
-                                                           20000.f,
-                                                           20000.f));
+                                                           22000.f,
+                                                           20.f));
     
     return layout;
 }
@@ -82,14 +86,11 @@ void Week6DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+    
+    mDelayL.setParameters(time->load(), feedback->load(), mix->load(), lowpass->load(), highpass->load());
+    mDelayR.setParameters(time->load(), feedback->load(), mix->load(), lowpass->load(), highpass->load());
     
     mDelayL.processBlock(buffer.getWritePointer(0), buffer.getNumSamples());
     mDelayR.processBlock(buffer.getWritePointer(1), buffer.getNumSamples());
