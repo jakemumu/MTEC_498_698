@@ -28,10 +28,10 @@ namespace juce
 
 /** Advanced properties of an AudioProcessorValueTreeState::Parameter.
 
-    The members here have the same meaning as the similarly-named member functions of
+ The members here have the same meaning as the similarly-named member fu*nctions of
     AudioParameterFloatAttributes.
 
-    @see AudioParameterFloatAttributes, RangedAudioParameterAttributes
+ @see AudioParameterFloatAttributes, RangedAudioParameter*Attributes
 */
 class AudioProcessorValueTreeStateParameterAttributes
 {
