@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="K7X0aG" name="Week 6 - Delay" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+  <MAINGROUP id="hLo3G7" name="Week 6 - Delay">
+    <GROUP id="{AE3C9812-0588-BF33-E3FB-113916AFE591}" name="Source">
+      <GROUP id="{37BE5B5F-A8EC-7D1A-C139-1DF9B57673BE}" name="Managers">
+        <FILE id="eB54Ac" name="ParameterDefines.h" compile="0" resource="0"
+              file="Source/ParameterDefines.h"/>
+        <FILE id="VtDhKG" name="ParameterManager.cpp" compile="1" resource="0"
+              file="Source/ParameterManager.cpp"/>
+        <FILE id="XMfdyd" name="ParameterManager.h" compile="0" resource="0"
+              file="Source/ParameterManager.h"/>
+      </GROUP>
+      <GROUP id="{19D770B7-E2CB-C544-F6EF-15FA212F2A16}" name="Components">
+        <FILE id="bv3kpn" name="SliderContainer.cpp" compile="1" resource="0"
+              file="Source/SliderContainer.cpp"/>
+        <FILE id="WLp9Lf" name="SliderContainer.h" compile="0" resource="0"
+              file="Source/SliderContainer.h"/>
+      </GROUP>
+      <GROUP id="{178A9DFF-3112-1C90-294A-5C6286905D8C}" name="DSP">
+        <FILE id="XziTJ0" name="AudioHelpers.h" compile="0" resource="0" file="Source/AudioHelpers.h"/>
+        <FILE id="e7SQLF" name="Delay.cpp" compile="1" resource="0" file="Source/Delay.cpp"/>
+        <FILE id="vOl8LU" name="Delay.h" compile="0" resource="0" file="Source/Delay.h"/>
+      </GROUP>
+      <FILE id="seASER" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="EUu3sJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="xVEyWm" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="D6SC2A" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Week 6 - Delay"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Week 6 - Delay"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../SDKs/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
