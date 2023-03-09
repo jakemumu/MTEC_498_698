@@ -7,12 +7,6 @@
 
 #include "Delay.h"
 
-
-DSPBase {
-    prepareToPlay = 0;
-    getSmoothedValue(
-}
-
 /* */
 Delay::Delay()
 {
