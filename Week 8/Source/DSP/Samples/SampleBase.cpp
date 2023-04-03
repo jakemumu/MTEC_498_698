@@ -7,7 +7,7 @@
 //
 
 #include "SampleBase.h"
-#include "../AudioHelpers.h"
+#include "AudioHelpers.h"
 
 SampleBase::SampleBase()
 {

@@ -6,7 +6,7 @@
 //
 
 #include "Delay.h"
-#include "../AudioHelpers.h"
+#include "AudioHelpers.h"
 
 /* */
 Delay::Delay()

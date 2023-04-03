@@ -6,7 +6,7 @@
 //
 
 #include "ParameterManager.h"
-#include "../Interfaces/ProcessorInterface.h"
+#include "ProcessorInterface.h"
 
 /* */
 ParameterManager::ParameterManager(ProcessorInterface* inInterface)
