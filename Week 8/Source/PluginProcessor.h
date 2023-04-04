@@ -10,14 +10,14 @@
 
 #include <JuceHeader.h>
 
-// INCLUDE OUR SINEWAVE
-#include "DSP/Samples/InMemorySample.h"
-#include "DSP/Time Based/Delay.h"
-#include "Managers/Parameter Manager/ParameterManager.h"
-#include "Managers/Preset Manager/PresetManager.h"
-#include "Managers/Property Manager/PropertyManager.h"
-#include "Managers/Interfaces/ProcessorInterface.h"
+#include "InMemorySample.h"
+#include "Delay.h"
+#include "ParameterManager.h"
+#include "PresetManager.h"
+#include "PropertyManager.h"
+#include "ProcessorInterface.h"
 #include "PluginProcessorBase.h"
+#include "Grain.h"
 
 #define SIMPLE_SAMPLE_IN_STANDALONE 1
 
@@ -59,6 +59,8 @@ private:
     
     Delay mDelayLeft;
     Delay mDelayRight;
+    
+    Grain mGrain;
     
 #if SIMPLE_SAMPLE_IN_STANDALONE
     InMemorySample mTestingSample;
