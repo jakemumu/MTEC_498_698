@@ -14,18 +14,23 @@ public:
     
     void setSize(int inGrainSize) {
         mGrainSize = inGrainSize;
+        // this make it not active after a set size call.
+        // could be more explicit
+        mGrainCounter = mGrainSize;
     }
     
-    void reset() {
+    void start() {
         mGrainCounter = 0;
     }
     
     float getNextWindowSample() {
-        mGrainCounter++;
-        
-        auto val = 0.5 * (1 - std::cos(6.283185307179586 * (float)mGrainCounter / (((float)mGrainSize)-1.f)));
-        
-        return val;
+        if (isActive()) {
+            mGrainCounter++;
+                        
+            return 0.5f * (1.0f - cos(juce::MathConstants<float>::twoPi * (float)mGrainCounter / (float)mGrainSize));
+        } else {
+            return 0;
+        }
     }
     
     bool isActive() {
