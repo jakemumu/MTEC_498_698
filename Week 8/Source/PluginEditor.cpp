@@ -87,9 +87,7 @@ void CoursePluginAudioProcessorEditor::paint(juce::Graphics& g)
     
     g.setColour(juce::Colours::white);
     g.setFont(juce::Font(12));
-    
-    auto puppy_image = ImageCache::getFromMemory(BinaryData::puppy_jpg, BinaryData::puppy_jpgSize);
-    g.drawImage(puppy_image, getLocalBounds().toFloat());
+
     
     for (int i = 0; i < TotalNumberParameters; i++) {
         g.drawText(PARAMETER_NAMES[i], mSliders[i]->getX(), mSliders[i]->getBottom(), 100, 20, Justification::centred);

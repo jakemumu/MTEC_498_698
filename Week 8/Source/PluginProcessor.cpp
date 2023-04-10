@@ -27,8 +27,14 @@ void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     mDelayLeft.initialize(sampleRate, samplesPerBlock);
     mDelayRight.initialize(sampleRate, samplesPerBlock);
     
-    mGrain.setSize(.5f * getSampleRate());
-    mGrain.reset();
+    for (int i = 0; i < mGrains.size(); i++) {
+        mGrains[i].setSize(mGrainsizeSeconds * getSampleRate());
+    }
+    
+    mGrainBuffer.setSize(10.f * sampleRate);
+    
+    mScheduler.setTime(mGrainsizeSeconds / mGrainOverlapRate * getSampleRate());
+    mScheduler.reset();
 }
 
 void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -50,18 +56,34 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     input_gain /= 2;
     mInputGain = input_gain;
     
-    auto* left = buffer.getWritePointer(0);
-    auto* right = buffer.getWritePointer(1);
+    auto* left_buf = buffer.getWritePointer(0);
+    auto* right_buf = buffer.getWritePointer(1);
     
-    for (int i = 0; i < buffer.getNumSamples(); i++) {
+    for (int sample = 0; sample < buffer.getNumSamples(); sample++) {
         
-        auto grain_val = mGrain.getNextWindowSample();
+        mGrainBuffer.writeToBuffer(left_buf[sample], right_buf[sample]);
         
-        left[i] = left[i] * grain_val;
-        right[i] = right[i] * grain_val;
+        if (mScheduler.trigger()) {
+            for (int j = 0; j < mGrains.size(); j++) {
+                if (mGrains[j].isActive() == false) {
+                    mGrains[j].start();
+                    break;
+                }
+            }
+        }
+
+        float left = left_buf[sample];
+        float right = right_buf[sample];
+
+        left_buf[sample] = 0;
+        right_buf[sample] = 0;
         
-        if (!mGrain.isActive()) {
-            mGrain.reset();
+        for (int j = 0; j < mGrains.size(); j++) {
+            if (mGrains[j].isActive()) {
+                auto val = mGrains[j].getNextWindowSample();
+                left_buf[sample] += left * val;
+                right_buf[sample] += right * val;
+            }
         }
     }
     

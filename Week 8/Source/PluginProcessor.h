@@ -18,6 +18,8 @@
 #include "ProcessorInterface.h"
 #include "PluginProcessorBase.h"
 #include "Grain.h"
+#include "GrainBuffer.h"
+#include "Scheduler.h"
 
 #define SIMPLE_SAMPLE_IN_STANDALONE 1
 
@@ -54,13 +56,19 @@ private:
     
     void _generateSimpleSample(AudioBuffer<float>& inBuffer);
     
+    const float mGrainsizeSeconds = 0.1f;
+    const float mGrainOverlapRate = 2.f;
+    
     float mInputGain = 0;
     float mOutputGain = 0;
+    
+    GrainBuffer mGrainBuffer;
     
     Delay mDelayLeft;
     Delay mDelayRight;
     
-    Grain mGrain;
+    std::array<Grain, 10> mGrains;
+    Scheduler mScheduler;
     
 #if SIMPLE_SAMPLE_IN_STANDALONE
     InMemorySample mTestingSample;
