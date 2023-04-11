@@ -24,17 +24,13 @@ CoursePluginAudioProcessor::~CoursePluginAudioProcessor()
 //==============================================================================
 void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    // set sample rate to ensure time calculations work.
+//    mADSR.setSampleRate(sampleRate);
+    
     mDelayLeft.initialize(sampleRate, samplesPerBlock);
     mDelayRight.initialize(sampleRate, samplesPerBlock);
     
-    for (int i = 0; i < mGrains.size(); i++) {
-        mGrains[i].setSize(mGrainsizeSeconds * getSampleRate());
-    }
-    
-    mGrainBuffer.setSize(10.f * sampleRate);
-    
-    mScheduler.setTime(mGrainsizeSeconds / mGrainOverlapRate * getSampleRate());
-    mScheduler.reset();
+    mRealTimeGranulator.prepareToPlay(sampleRate, samplesPerBlock);
 }
 
 void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -46,48 +42,37 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
+    // generating some test audio
     if (wrapperType == AudioProcessor::wrapperType_Standalone && SIMPLE_SAMPLE_IN_STANDALONE) {
         _generateSimpleSample(buffer);
     }
     
+    // storing the input gain for meters
     float input_gain = 0;
     input_gain += buffer.getMagnitude(0, 0, buffer.getNumSamples());
     input_gain += buffer.getMagnitude(1, 0, buffer.getNumSamples());
     input_gain /= 2;
     mInputGain = input_gain;
     
+    // do audio processing
     auto* left_buf = buffer.getWritePointer(0);
     auto* right_buf = buffer.getWritePointer(1);
     
-    for (int sample = 0; sample < buffer.getNumSamples(); sample++) {
-        
-        mGrainBuffer.writeToBuffer(left_buf[sample], right_buf[sample]);
-        
-        if (mScheduler.trigger()) {
-            for (int j = 0; j < mGrains.size(); j++) {
-                if (mGrains[j].isActive() == false) {
-                    mGrains[j].start();
-                    break;
-                }
-            }
-        }
-
-        float left = left_buf[sample];
-        float right = right_buf[sample];
-
-        left_buf[sample] = 0;
-        right_buf[sample] = 0;
-        
-        for (int j = 0; j < mGrains.size(); j++) {
-            if (mGrains[j].isActive()) {
-                auto val = mGrains[j].getNextWindowSample();
-                left_buf[sample] += left * val;
-                right_buf[sample] += right * val;
-            }
-        }
-    }
+    mRealTimeGranulator.process(left_buf, right_buf, buffer.getNumSamples());
     
-    
+//    // create the ADSR Params
+//    ADSR::Parameters adsr_params;
+//    adsr_params.attack = 1.f;
+//    adsr_params.decay = 1.f;
+//    adsr_params.sustain = 0.f;
+//    adsr_params.release = 0.f;
+//
+//    // ADSR ready to go
+//    mADSR.setParameters(adsr_params);
+//
+//    if (!mADSRStarted) {
+//        mADSR.noteOn();
+//    }
     
 //    mDelayLeft.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
 //                             mParameterManager->getCurrentValue(DELAY_FEEDBACK),

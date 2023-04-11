@@ -18,6 +18,9 @@ public:
     }
     
     void writeToBuffer(float& inLeft, float& inRight) {
+//        DBG("WRITING LEFT: " << inLeft << " POSITION: " << mWriteHead);
+//        DBG("WRITING RIGHT: " << inRight << " POSITION: " << mWriteHead);
+
         mCircularBuffer.setSample(0, mWriteHead, inLeft);
         mCircularBuffer.setSample(1, mWriteHead, inRight);
         
@@ -28,8 +31,10 @@ public:
         }
     }
     
-    float getSample(int inChannel, int inSample) {
+    float getSample(int inChannel, int inSample) const {
+//        DBG("READING: " << inChannel << " - " << mCircularBuffer.getSample(inChannel, inSample) << " POSITION: " << mWriteHead);
         return mCircularBuffer.getSample(inChannel, inSample);
+        
     }
     
     int getWriteHead() {

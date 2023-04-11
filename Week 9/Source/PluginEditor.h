@@ -16,7 +16,8 @@
 //==============================================================================
 /**
 */
-class CoursePluginAudioProcessorEditor  : public juce::AudioProcessorEditor
+class CoursePluginAudioProcessorEditor  : public juce::AudioProcessorEditor,
+                                          public juce::DragAndDropContainer
 {
 public:
     
@@ -43,6 +44,23 @@ public:
     void resized() override;
 
 private:
+    
+    class Draggable : public Component {
+    public:
+        /* */
+        void paint(Graphics& g) override {
+            g.fillAll(Colours::red);
+        }
+        /* */
+        void mouseDown(const MouseEvent& e) override {
+            juce::DragAndDropContainer* drag_container =
+                    juce::DragAndDropContainer::findParentDragContainerFor(this);
+            drag_container->startDragging("", this);
+        }
+        
+    };
+    
+    Draggable mDraggableComponent;
     
     void _updatePresetComboBoxOptions();
         

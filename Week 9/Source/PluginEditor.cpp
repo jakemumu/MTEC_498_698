@@ -23,8 +23,7 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     
     typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
     auto value_tree = audioProcessor.getParameterManager()->getValueTree();
-    
-    
+        
     // SETUP OUR SLIDERS
     for (int i = 0; i < TotalNumberParameters; i++) {
         // Create the slider
@@ -71,6 +70,8 @@ CoursePluginAudioProcessorEditor::CoursePluginAudioProcessorEditor (CoursePlugin
     addAndMakeVisible(mOutputMeter.get());
     
     setSize(TotalNumberParameters * 100 + 200, 120);
+    
+    addAndMakeVisible(mDraggableComponent);
 }
 
 CoursePluginAudioProcessorEditor::~CoursePluginAudioProcessorEditor()
@@ -96,6 +97,8 @@ void CoursePluginAudioProcessorEditor::paint(juce::Graphics& g)
 
 void CoursePluginAudioProcessorEditor::resized()
 {
+    mDraggableComponent.setBounds(0, 0, 20, 20);
+    
     for (int i = 0; i < TotalNumberParameters; i++) {
         mSliders[i]->setBounds(50 + 100 * i, 0, 100, 100);
     }

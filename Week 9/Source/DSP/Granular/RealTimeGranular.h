@@ -8,6 +8,10 @@
 #ifndef RealTimeGranular_h
 #define RealTimeGranular_h
 
+#include "Grain.h"
+#include "GrainBuffer.h"
+#include "Scheduler.h"
+
 class RealTimeGranular {
 public:
     
@@ -19,6 +23,12 @@ public:
     
 private:
     
+    const float mGrainsizeSeconds = 0.1f;
+    const float mGrainOverlapRate = 2.f;
+    
+    Scheduler mScheduler;
+    GrainBuffer mGrainBuffer;
+    std::array<Grain, 10> mGrains;
 };
 
 #endif /* RealTimeGranular_h */
