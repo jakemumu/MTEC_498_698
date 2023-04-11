@@ -32,6 +32,7 @@ public:
     }
     
     float getSample(int inChannel, int inSample) const {
+        jassert(isPositiveAndBelow(inSample, mCircularBuffer.getNumSamples()));
 //        DBG("READING: " << inChannel << " - " << mCircularBuffer.getSample(inChannel, inSample) << " POSITION: " << mWriteHead);
         return mCircularBuffer.getSample(inChannel, inSample);
         
@@ -41,7 +42,7 @@ public:
         return mWriteHead;
     }
     
-    int getNumSamples() {
+    int getNumSamples() const {
         return mCircularBuffer.getNumSamples();
     }
     

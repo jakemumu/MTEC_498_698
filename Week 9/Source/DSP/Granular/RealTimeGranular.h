@@ -21,6 +21,9 @@ public:
     /* */
     void process(float* inBufferLeft, float* inBufferRight, int inNumSamples);
     
+    /* */
+    float processSample(float inSample);
+    
 private:
     
     const float mGrainsizeSeconds = 0.1f;

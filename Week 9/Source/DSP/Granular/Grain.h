@@ -10,6 +10,7 @@
 
 #include "JuceHeader.h"
 #include "GrainBuffer.h"
+#include "AudioHelpers.h"
 
 class Grain {
 public:
@@ -22,8 +23,9 @@ public:
         outLeft = inGrainBuffer.getSample(0, mGrainReadhead) * val;
         outRight = inGrainBuffer.getSample(1, mGrainReadhead) * val;
         
-        mGrainReadhead++;
+        mGrainReadhead += 2.f;
         
+        mGrainReadhead = AudioHelpers::wrap_buffer(mGrainReadhead, inGrainBuffer.getNumSamples());
     }
 
     void setSize(int inGrainSize) {
@@ -34,7 +36,10 @@ public:
     }
         
     void start(float inStartPosition, int inCircularBufferSize) {
-        mGrainReadhead = jlimit((float)0, (float)inCircularBufferSize, inStartPosition - 1.f);
+        float distance_past_write = (mPitch - 1.f) * mGrainSize;
+        
+        mGrainReadhead = inStartPosition;
+        mGrainReadhead = AudioHelpers::wrap_buffer(mGrainReadhead - distance_past_write, inCircularBufferSize);
         mGrainCounter = 0;
     }
     
@@ -59,13 +64,16 @@ public:
 private:
     
     // where to read from in the buffer
-    float mGrainReadhead;
+    float mGrainReadhead = 0.f;
     
     // size in sample
     int mGrainSize  = 0;
     
     // position in sample
     int mGrainCounter = 0;
+    
+    // up one octave
+    float mPitch = 2.f;
 };
 
 

@@ -50,3 +50,32 @@ void RealTimeGranular::process(float* inBufferLeft, float* inBufferRight, int in
         }
     }
 }
+
+/* */
+float RealTimeGranular::processSample(float inSample)
+{
+    mGrainBuffer.writeToBuffer(inSample, inSample);
+    
+    if (mScheduler.trigger()) {
+        for (int j = 0; j < mGrains.size(); j++) {
+            if (mGrains[j].isActive() == false) {
+                mGrains[j].start(mGrainBuffer.getWriteHead() - 2, mGrainBuffer.getNumSamples());
+                break;
+            }
+        }
+    }
+
+    inSample = 0;
+    
+    float temp_left;
+    float temp_right;
+    
+    for (int j = 0; j < mGrains.size(); j++) {
+        if (mGrains[j].isActive()) {
+            mGrains[j].processSample(mGrainBuffer, temp_left, temp_right);
+            inSample += temp_left;
+        }
+    }
+    
+    return inSample;
+}

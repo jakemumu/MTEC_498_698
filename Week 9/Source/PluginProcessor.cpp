@@ -29,8 +29,6 @@ void CoursePluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     
     mDelayLeft.initialize(sampleRate, samplesPerBlock);
     mDelayRight.initialize(sampleRate, samplesPerBlock);
-    
-    mRealTimeGranulator.prepareToPlay(sampleRate, samplesPerBlock);
 }
 
 void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -53,13 +51,7 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     input_gain += buffer.getMagnitude(1, 0, buffer.getNumSamples());
     input_gain /= 2;
     mInputGain = input_gain;
-    
-    // do audio processing
-    auto* left_buf = buffer.getWritePointer(0);
-    auto* right_buf = buffer.getWritePointer(1);
-    
-    mRealTimeGranulator.process(left_buf, right_buf, buffer.getNumSamples());
-    
+        
 //    // create the ADSR Params
 //    ADSR::Parameters adsr_params;
 //    adsr_params.attack = 1.f;
@@ -74,20 +66,20 @@ void CoursePluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 //        mADSR.noteOn();
 //    }
     
-//    mDelayLeft.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
-//                             mParameterManager->getCurrentValue(DELAY_FEEDBACK),
-//                             mParameterManager->getCurrentValue(DELAY_MIX),
-//                             mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
-//                             mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
-//
-//    mDelayRight.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
-//                              mParameterManager->getCurrentValue(DELAY_FEEDBACK),
-//                              mParameterManager->getCurrentValue(DELAY_MIX),
-//                              mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
-//                              mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
-//
-//    mDelayLeft.processBlock(buffer.getWritePointer(0), buffer.getNumSamples());
-//    mDelayRight.processBlock(buffer.getWritePointer(1), buffer.getNumSamples());
+    mDelayLeft.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
+                             mParameterManager->getCurrentValue(DELAY_FEEDBACK),
+                             mParameterManager->getCurrentValue(DELAY_MIX),
+                             mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
+                             mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
+
+    mDelayRight.setParameters(mParameterManager->getCurrentValue(DELAY_TIME_SECONDS),
+                              mParameterManager->getCurrentValue(DELAY_FEEDBACK),
+                              mParameterManager->getCurrentValue(DELAY_MIX),
+                              mParameterManager->getCurrentValue(DELAY_FEEDBACK_LOWPASS),
+                              mParameterManager->getCurrentValue(DELAY_FEEDBACK_HIGHPASS));
+
+    mDelayLeft.processBlock(buffer.getWritePointer(0), buffer.getNumSamples());
+    mDelayRight.processBlock(buffer.getWritePointer(1), buffer.getNumSamples());
     
     float output_gain = 0;
     output_gain += buffer.getMagnitude(0, 0, buffer.getNumSamples());

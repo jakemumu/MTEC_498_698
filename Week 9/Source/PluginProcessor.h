@@ -11,13 +11,12 @@
 #include <JuceHeader.h>
 
 #include "InMemorySample.h"
-#include "Delay.h"
+#include "GrainDelay.h"
 #include "ParameterManager.h"
 #include "PresetManager.h"
 #include "PropertyManager.h"
 #include "ProcessorInterface.h"
 #include "PluginProcessorBase.h"
-#include "RealTimeGranular.h"
 
 #define SIMPLE_SAMPLE_IN_STANDALONE 1
 
@@ -57,11 +56,9 @@ private:
     float mInputGain = 0;
     float mOutputGain = 0;
     
-    Delay mDelayLeft;
-    Delay mDelayRight;
-    
-    RealTimeGranular mRealTimeGranulator;
-        
+    GrainDelay mDelayLeft;
+    GrainDelay mDelayRight;
+            
 #if SIMPLE_SAMPLE_IN_STANDALONE
     InMemorySample mTestingSample;
 #endif

@@ -7,79 +7,81 @@
     <GROUP id="{CD29536D-8845-4D04-0286-4D08E4475253}" name="Source">
       <GROUP id="{E2A74E50-3A7C-A6C9-A4CB-7F998718FD12}" name="DSP">
         <GROUP id="{56D88690-C0E1-BA2C-931F-896D55A6758F}" name="Generators">
-          <FILE id="nWywir" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/Generators/SineWave.cpp"/>
-          <FILE id="DEMCLy" name="SineWave.h" compile="0" resource="0" file="Source/DSP/Generators/SineWave.h"/>
+          <FILE id="XmYtzz" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/Generators/SineWave.cpp"/>
+          <FILE id="YACDLM" name="SineWave.h" compile="0" resource="0" file="Source/DSP/Generators/SineWave.h"/>
         </GROUP>
         <GROUP id="{E2BECBA4-2201-72F0-314E-58E9E7AA09E8}" name="Granular">
-          <FILE id="TP7Zs8" name="Grain.h" compile="0" resource="0" file="Source/DSP/Granular/Grain.h"/>
-          <FILE id="zHSr2f" name="GrainBuffer.h" compile="0" resource="0" file="Source/DSP/Granular/GrainBuffer.h"/>
-          <FILE id="SxgSSb" name="RealTimeGranular.cpp" compile="1" resource="0"
+          <FILE id="aw3GfE" name="Grain.h" compile="0" resource="0" file="Source/DSP/Granular/Grain.h"/>
+          <FILE id="hlkt9h" name="GrainBuffer.h" compile="0" resource="0" file="Source/DSP/Granular/GrainBuffer.h"/>
+          <FILE id="TcLVVU" name="RealTimeGranular.cpp" compile="1" resource="0"
                 file="Source/DSP/Granular/RealTimeGranular.cpp"/>
-          <FILE id="yjCiLy" name="RealTimeGranular.h" compile="0" resource="0"
+          <FILE id="l8DI5w" name="RealTimeGranular.h" compile="0" resource="0"
                 file="Source/DSP/Granular/RealTimeGranular.h"/>
-          <FILE id="CYnpc5" name="Scheduler.h" compile="0" resource="0" file="Source/DSP/Granular/Scheduler.h"/>
+          <FILE id="Vv6Q1S" name="Scheduler.h" compile="0" resource="0" file="Source/DSP/Granular/Scheduler.h"/>
         </GROUP>
         <GROUP id="{53360EB0-4175-51E4-05BD-B53745F28C48}" name="Samples">
-          <FILE id="frEPep" name="InMemorySample.cpp" compile="1" resource="0"
+          <FILE id="CWKNL2" name="InMemorySample.cpp" compile="1" resource="0"
                 file="Source/DSP/Samples/InMemorySample.cpp"/>
-          <FILE id="mODgKc" name="InMemorySample.h" compile="0" resource="0"
+          <FILE id="wj65V8" name="InMemorySample.h" compile="0" resource="0"
                 file="Source/DSP/Samples/InMemorySample.h"/>
-          <FILE id="jdfhKs" name="SampleBase.cpp" compile="1" resource="0" file="Source/DSP/Samples/SampleBase.cpp"/>
-          <FILE id="ApeVZI" name="SampleBase.h" compile="0" resource="0" file="Source/DSP/Samples/SampleBase.h"/>
+          <FILE id="A0sr0R" name="SampleBase.cpp" compile="1" resource="0" file="Source/DSP/Samples/SampleBase.cpp"/>
+          <FILE id="gTuLvx" name="SampleBase.h" compile="0" resource="0" file="Source/DSP/Samples/SampleBase.h"/>
         </GROUP>
         <GROUP id="{D09671D5-3D06-C29A-A5B7-42FCDAAB39F2}" name="Time Based">
-          <FILE id="HhNHCN" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Time Based/Delay.cpp"/>
-          <FILE id="LUHIqD" name="Delay.h" compile="0" resource="0" file="Source/DSP/Time Based/Delay.h"/>
+          <FILE id="fwvPjh" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Time Based/Delay.cpp"/>
+          <FILE id="nhY0So" name="Delay.h" compile="0" resource="0" file="Source/DSP/Time Based/Delay.h"/>
+          <FILE id="sZHlIT" name="GrainDelay.cpp" compile="1" resource="0" file="Source/DSP/Time Based/GrainDelay.cpp"/>
+          <FILE id="N1Xsp0" name="GrainDelay.h" compile="0" resource="0" file="Source/DSP/Time Based/GrainDelay.h"/>
         </GROUP>
-        <FILE id="Zb35IL" name="AudioHelpers.h" compile="0" resource="0" file="Source/DSP/AudioHelpers.h"/>
+        <FILE id="MFUl4H" name="AudioHelpers.h" compile="0" resource="0" file="Source/DSP/AudioHelpers.h"/>
       </GROUP>
       <GROUP id="{1B6231C4-F144-2951-2862-8D7299B87DFE}" name="Managers">
         <GROUP id="{B8C3CD21-1320-761E-1028-4FAA199B9BDA}" name="Folder Manager">
-          <FILE id="RFUUj4" name="FolderManager.cpp" compile="1" resource="0"
+          <FILE id="C2kRpG" name="FolderManager.cpp" compile="1" resource="0"
                 file="Source/Managers/Folder Manager/FolderManager.cpp"/>
-          <FILE id="Zk0RvJ" name="FolderManager.h" compile="0" resource="0" file="Source/Managers/Folder Manager/FolderManager.h"/>
+          <FILE id="dxEXX8" name="FolderManager.h" compile="0" resource="0" file="Source/Managers/Folder Manager/FolderManager.h"/>
         </GROUP>
         <GROUP id="{507C22B9-5A85-A071-F6BF-4C3D34BDE219}" name="Interfaces">
-          <FILE id="Kb2eKK" name="ProcessorInterface.h" compile="0" resource="0"
+          <FILE id="U2a4oO" name="ProcessorInterface.h" compile="0" resource="0"
                 file="Source/Managers/Interfaces/ProcessorInterface.h"/>
         </GROUP>
         <GROUP id="{4A42E928-8A1E-4EC3-3DCB-5A026F3B2C10}" name="Parameter Manager">
-          <FILE id="jQSQ8W" name="ParameterDefines.h" compile="0" resource="0"
+          <FILE id="M4UDt3" name="ParameterDefines.h" compile="0" resource="0"
                 file="Source/Managers/Parameter Manager/ParameterDefines.h"/>
-          <FILE id="S14iKu" name="ParameterManager.cpp" compile="1" resource="0"
+          <FILE id="WylCD2" name="ParameterManager.cpp" compile="1" resource="0"
                 file="Source/Managers/Parameter Manager/ParameterManager.cpp"/>
-          <FILE id="gSNeXx" name="ParameterManager.h" compile="0" resource="0"
+          <FILE id="fm8zRx" name="ParameterManager.h" compile="0" resource="0"
                 file="Source/Managers/Parameter Manager/ParameterManager.h"/>
         </GROUP>
         <GROUP id="{6CE55BE4-8CF5-54C7-A7AE-EFF20A89E3FA}" name="Preset Manager">
-          <FILE id="BCnDQI" name="PresetManager.cpp" compile="1" resource="0"
+          <FILE id="FEkwiA" name="PresetManager.cpp" compile="1" resource="0"
                 file="Source/Managers/Preset Manager/PresetManager.cpp"/>
-          <FILE id="vmA4ir" name="PresetManager.h" compile="0" resource="0" file="Source/Managers/Preset Manager/PresetManager.h"/>
+          <FILE id="ep9boL" name="PresetManager.h" compile="0" resource="0" file="Source/Managers/Preset Manager/PresetManager.h"/>
         </GROUP>
         <GROUP id="{BB04120D-61CC-BE72-C9C7-D90986889BDC}" name="Property Manager">
-          <FILE id="fVUlUh" name="PropertyManager.cpp" compile="1" resource="0"
+          <FILE id="twMIwi" name="PropertyManager.cpp" compile="1" resource="0"
                 file="Source/Managers/Property Manager/PropertyManager.cpp"/>
-          <FILE id="A0eMMU" name="PropertyManager.h" compile="0" resource="0"
+          <FILE id="NwsdaY" name="PropertyManager.h" compile="0" resource="0"
                 file="Source/Managers/Property Manager/PropertyManager.h"/>
         </GROUP>
       </GROUP>
       <GROUP id="{049607D3-3567-E69C-5A52-CFCA2E9049FA}" name="UI">
-        <FILE id="eA6w4w" name="DBMeter.cpp" compile="1" resource="0" file="Source/UI/DBMeter.cpp"/>
-        <FILE id="cUe7Aa" name="DBMeter.h" compile="0" resource="0" file="Source/UI/DBMeter.h"/>
-        <FILE id="RtPGZP" name="MyLookAndFeel.cpp" compile="1" resource="0"
+        <FILE id="htKgjo" name="DBMeter.cpp" compile="1" resource="0" file="Source/UI/DBMeter.cpp"/>
+        <FILE id="iUL5gV" name="DBMeter.h" compile="0" resource="0" file="Source/UI/DBMeter.h"/>
+        <FILE id="tBMOPV" name="MyLookAndFeel.cpp" compile="1" resource="0"
               file="Source/UI/MyLookAndFeel.cpp"/>
-        <FILE id="kbeJcS" name="MyLookAndFeel.h" compile="0" resource="0" file="Source/UI/MyLookAndFeel.h"/>
+        <FILE id="l0mV1V" name="MyLookAndFeel.h" compile="0" resource="0" file="Source/UI/MyLookAndFeel.h"/>
       </GROUP>
-      <FILE id="FwJvWc" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="ngEqKL" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="aCkCjU" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="KoLw1n" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="jbAWrx" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="hAFtwD" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="AwMY0C" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="TYANqa" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="KQDZvH" name="PluginProcessorBase.cpp" compile="1" resource="0"
+      <FILE id="K5owjJ" name="PluginProcessorBase.cpp" compile="1" resource="0"
             file="Source/PluginProcessorBase.cpp"/>
-      <FILE id="iqJOAm" name="PluginProcessorBase.h" compile="0" resource="0"
+      <FILE id="aGnLUb" name="PluginProcessorBase.h" compile="0" resource="0"
             file="Source/PluginProcessorBase.h"/>
     </GROUP>
   </MAINGROUP>
